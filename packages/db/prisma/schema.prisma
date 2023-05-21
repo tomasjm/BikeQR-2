@@ -39,12 +39,12 @@ model Storage {
     statusId      Int
     createdAt     DateTime  @default(now())
     updatedat     DateTime  @updatedAt
-    endAt         DateTime?
+    endedAt       DateTime?
 }
 
 model Bike {
     id            String    @id @default(cuid())
-    code          Int
+    code          Int       @unique
     description   String
     user          User      @relation(fields: [userId], references:[id])
     userId        String 
