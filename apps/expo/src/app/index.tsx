@@ -4,6 +4,8 @@ import { Text, TouchableOpacity, View } from "react-native";
 import Scanner from "~/components/Scanner";
 import useScanner, { ScannerHook } from "./hooks/useScanner";
 import { api } from "~/utils/api";
+
+import QRCode from 'react-native-qrcode-svg';
 const Index = () => {
   const [state, setState] = useState(false);
   const { data } = api.user.all.useQuery();
@@ -44,7 +46,9 @@ const Index = () => {
           </TouchableOpacity>
         </View>
       )}
-
+      <QRCode
+        value="http://awesome.link.qr"
+      />
     </View>
   );
 };
