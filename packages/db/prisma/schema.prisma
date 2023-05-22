@@ -10,56 +10,63 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id      String @id @default(cuid())
-    title   String
-    content String
+
+model Token {
+    id            String    @id @default(cuid())
+    token         String    @unique
+    storage       Storage?
 }
 
-// NextAuth.js Models
-// NOTE: When using postgresql, mysql or sqlserver, 
-// uncomment the @db.Text annotations below
-// @see https://next-auth.js.org/schemas/models
-model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? // @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
+model Status {
+    id            Int       @id @default(autoincrement())
+    status        String
+    code          Int
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+    storage       Storage[]
+}
+model Storage {
+    id            String    @id @default(cuid())
+    token         Token     @relation(fields: [tokenId], references: [id])
+    tokenId       String    @unique
+    user          User      @relation(name: "UserStorage", fields: [userId], references: [id])
+    userId        String    
+    attendant     User      @relation(name: "AttendantStorage", fields: [attendantId], references: [id])
+    attendantId   String 
+    bike          Bike      @relation(fields: [bikeId], references: [id])
+    bikeId        String 
+    status        Status    @relation(fields: [statusId], references: [id])
+    statusId      Int
+    createdAt     DateTime  @default(now())
+    updatedat     DateTime  @updatedAt
+    endedAt       DateTime?
 }
 
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Bike {
+    id            String    @id @default(cuid())
+    code          Int       @unique
+    description   String
+    user          User      @relation(fields: [userId], references:[id])
+    userId        String 
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+    storage       Storage[]
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+    id                  String      @id @default(cuid())
+    name                String?
+    email               String      @unique
+    password            String
+    role                Role        @default(USER)
+    bikes               Bike[]
+    createdAt           DateTime    @default(now())
+    updatedAt           DateTime    @updatedAt
+    storageUser         Storage[]   @relation("UserStorage")
+    storageAttendant    Storage[]   @relation("AttendantStorage")
 }
 
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
+enum Role {
+    USER
+    ATTENDANT
 }
