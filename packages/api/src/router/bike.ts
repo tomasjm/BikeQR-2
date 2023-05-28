@@ -36,5 +36,31 @@ export const bikeRouter = createTRPCRouter({
         userId
       }
     })
+  }),
+  validateCode: publicProcedure.input(z.object({ code: z.number() })).query(async ({ ctx, input }) => {
+    const { code } = input;
+    const data = await ctx.prisma.bike.findMany({
+      where: {
+        code
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+          }
+        }
+      }
+    })
+    if (data.length == 1) {
+      return {
+        bike: {},
+        error: false
+      }
+    }
+    return {
+      msg: "No existe bicicleta asociada a este código",
+      bike: {},
+      error: true
+    }
   })
 });
