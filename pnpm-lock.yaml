@@ -34,6 +34,9 @@ importers:
 
   apps/expo:
     dependencies:
+      '@acme/jwt':
+        specifier: '*'
+        version: link:../../packages/jwt
       '@expo/metro-config':
         specifier: ^0.7.1
         version: 0.7.1
@@ -309,6 +312,22 @@ importers:
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.15.11)(typescript@5.0.4)
+      typescript:
+        specifier: ^5.0.4
+        version: 5.0.4
+
+  packages/jwt:
+    dependencies:
+      expo-jwt:
+        specifier: ^1.5.0
+        version: 1.5.0
+    devDependencies:
+      '@acme/eslint-config':
+        specifier: ^0.1.0
+        version: link:../config/eslint
+      eslint:
+        specifier: ^8.38.0
+        version: 8.38.0
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
@@ -4260,6 +4279,10 @@ packages:
     resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
     dev: false
 
+  /crypto-js@3.3.0:
+    resolution: {integrity: sha512-DIT51nX0dCfKltpRiXV+/TVZq+Qq2NgF4644+K7Ttnla7zEzqc+kjJyiB96BHNyUTBxyjzRcZYpUdZa+QAqi6Q==}
+    dev: false
+
   /crypto-random-string@1.0.0:
     resolution: {integrity: sha512-GsVpkFPlycH7/fRR7Dhcmnoii54gV1nz7y4CWyeFS14N+JVBBhY+r8amRHE4BwSYal7BPTDp8isvAlCxyFt3Hg==}
     engines: {node: '>=4'}
@@ -5194,6 +5217,12 @@ packages:
       expo: '*'
     dependencies:
       expo: 48.0.11(@babel/core@7.21.4)
+    dev: false
+
+  /expo-jwt@1.5.0:
+    resolution: {integrity: sha512-otfOTfjPx+wsJVSAOSExMugO2PJouYX5umDoqAy6nn94p5D8/85I3PBkx+3oSCkj+9PTFaoLKTbbePBConyGOA==}
+    dependencies:
+      crypto-js: 3.3.0
     dev: false
 
   /expo-keep-awake@12.0.1(expo@48.0.11):
