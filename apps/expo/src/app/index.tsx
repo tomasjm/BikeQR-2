@@ -4,17 +4,12 @@ import { Text, TouchableOpacity, View } from "react-native";
 import Scanner from "~/components/Scanner";
 import useScanner, { ScannerHook } from "./hooks/useScanner";
 import { api } from "~/utils/api";
-
 import QRCode from 'react-native-qrcode-svg';
+
 const Index = () => {
+  const { data } = api.bike.listByUserId.useQuery({ userId: "cli7wknah0000tyzw37wgo597" })
+  console.log(data)
   const [state, setState] = useState(false);
-  const mutation = api.jwt.sign.useMutation();
-  useEffect(() => {
-    mutation.mutate({ payload: { foo: "bar" }, secret: "123" });
-  }, [])
-  useEffect(() => {
-    console.log(mutation.data)
-  }, [mutation.data])
   const {
     scanned,
     hasPermission,

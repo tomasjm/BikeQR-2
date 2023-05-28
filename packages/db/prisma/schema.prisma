@@ -44,7 +44,7 @@ model Storage {
 
 model Bike {
     id            String    @id @default(cuid())
-    code          Int       @unique
+    code          Int       @default(autoincrement())
     description   String
     user          User      @relation(fields: [userId], references:[id])
     userId        String 
