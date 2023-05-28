@@ -53,13 +53,13 @@ export const bikeRouter = createTRPCRouter({
     })
     if (data.length == 1) {
       return {
-        bike: {},
+        data,
         error: false
       }
     }
     return {
       msg: "No existe bicicleta asociada a este código",
-      bike: {},
+      data: {},
       error: true
     }
   })
