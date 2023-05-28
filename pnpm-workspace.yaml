@@ -2,6 +2,6 @@ packages:
   - apps/expo
   - apps/nextjs
   - packages/api
-  - packages/auth
+  - packages/jwt
   - packages/db
   - packages/config/*

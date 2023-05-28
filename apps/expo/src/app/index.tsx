@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 import Scanner from "~/components/Scanner";
@@ -8,8 +8,13 @@ import { api } from "~/utils/api";
 import QRCode from 'react-native-qrcode-svg';
 const Index = () => {
   const [state, setState] = useState(false);
-  const { data } = api.user.all.useQuery();
-  console.log(data)
+  const mutation = api.jwt.sign.useMutation();
+  useEffect(() => {
+    mutation.mutate({ payload: { foo: "bar" }, secret: "123" });
+  }, [])
+  useEffect(() => {
+    console.log(mutation.data)
+  }, [mutation.data])
   const {
     scanned,
     hasPermission,
