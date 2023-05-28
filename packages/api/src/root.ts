@@ -5,7 +5,7 @@ import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   user: userRouter,
-  bike: bikeRouter
+  bike: bikeRouter,
   jwt: jwtRouter
 });
 
