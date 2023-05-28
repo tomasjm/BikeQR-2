@@ -43,7 +43,7 @@ const getBaseUrl = () => {
 export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [queryClient] = React.useState(() => new QueryClient());
+  const [queryClient] = React.useState(() => new QueryClient({ defaultOptions: { queries: { refetchOnMount: false } } }));
   const [trpcClient] = React.useState(() =>
     api.createClient({
       transformer: superjson,
