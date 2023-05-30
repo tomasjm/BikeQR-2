@@ -11,7 +11,7 @@ export const Item = ({ title }: ItemProps) => (
     <Text>{title}</Text>
   </View>
 );
-function Index() {
+function UserBikeList() {
   const { data } = api.bike.listByUserId.useQuery({
     userId: "cli7wknah0000tyzw37wgo597",
   });
@@ -30,4 +30,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default UserBikeList;
