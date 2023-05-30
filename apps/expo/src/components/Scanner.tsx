@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { useRouter } from "expo-router";
 
 import { type ScannerHook } from "../hooks/useScanner";
 
@@ -13,7 +12,6 @@ export default function Scanner({ args }: { args: ScannerHook }) {
     setScanned,
     handleBarCodeScanned,
   } = args;
-  const router = useRouter();
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -51,12 +49,6 @@ export default function Scanner({ args }: { args: ScannerHook }) {
             onPress={() => setScanned(false)}
           >
             <Text>Escanear de nuevo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="bg-green-000-color w-32 items-center rounded-md p-2 text-base text-white"
-            onPress={() => router.back()}
-          >
-            <Text>Volver</Text>
           </TouchableOpacity>
         </View>
       )}

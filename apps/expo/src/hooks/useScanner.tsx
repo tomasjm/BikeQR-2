@@ -9,12 +9,10 @@ export interface ScannerHook {
   setHasPermission: (hasPermission: boolean) => void;
   setScanned: (scanned: boolean) => void;
 }
-
-function useScanner({
-  type: expectedType,
-}: {
+type UseScannerProps = {
   type: BarCodeScannerResult["type"];
-}) {
+};
+function useScanner({ type: expectedType }: UseScannerProps) {
   const [scanned, setScanned] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [data, setData] = useState<BarCodeScannerResult["data"]>("");

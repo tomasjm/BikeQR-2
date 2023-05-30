@@ -1,6 +1,5 @@
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Constants from "expo-constants";
 import { Stack } from "expo-router";
 
 import { TRPCProvider } from "~/utils/api";
@@ -20,8 +19,23 @@ const RootLayout = () => {
             headerStyle: {
               backgroundColor: "#F0E9CC",
             },
+            headerTintColor: "#000",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
           }}
-        />
+        >
+          <Stack.Screen name="index" options={{ title: "Inicio" }} />
+          <Stack.Screen
+            name="BikeRegistry"
+            options={{ title: "Registro de Bicicletas" }}
+          />
+          <Stack.Screen name="ScannerBarCode" options={{ title: "Escáner" }} />
+          <Stack.Screen
+            name="UserBikeList"
+            options={{ title: "Lista de Bicicletas" }}
+          />
+        </Stack>
       </SafeAreaProvider>
     </TRPCProvider>
   );

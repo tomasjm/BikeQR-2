@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 import Scanner from "~/components/Scanner";
-import useScanner, { type ScannerHook } from "~/hooks/useScanner";
+import useScanner, { ScannerHook } from "~/hooks/useScanner";
 
 function ScannerBarCode() {
   const {
