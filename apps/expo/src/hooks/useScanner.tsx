@@ -1,36 +1,46 @@
 import { useState } from "react";
-import { BarCodeScannerResult } from "expo-barcode-scanner";
+import { type BarCodeScannerResult } from "expo-barcode-scanner";
 
 export interface ScannerHook {
   scanned: boolean;
   hasPermission: boolean | null;
-  type?: BarCodeScannerResult["type"];
   data?: BarCodeScannerResult["data"];
   handleBarCodeScanned: (args: BarCodeScannerResult) => void;
   setHasPermission: (hasPermission: boolean) => void;
   setScanned: (scanned: boolean) => void;
 }
 
-function useScanner() {
+function useScanner({
+  type: expectedType,
+}: {
+  type: BarCodeScannerResult["type"];
+}) {
   const [scanned, setScanned] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-  const [type, setType] = useState<BarCodeScannerResult["type"]>("");
   const [data, setData] = useState<BarCodeScannerResult["data"]>("");
+  const [error, setError] = useState(false);
 
-  const handleBarCodeScanned = ({ type, data }: BarCodeScannerResult) => {
+  const handleBarCodeScanned = ({
+    type: scannedType,
+    data,
+  }: BarCodeScannerResult) => {
     setScanned(true);
-    setType(type);
-    setData(data);
+    if (scannedType === expectedType) {
+      setData(data);
+      setError(false);
+    } else {
+      setError(true);
+    }
   };
 
   return {
     scanned,
     hasPermission,
-    type,
     data,
     handleBarCodeScanned,
     setHasPermission,
     setScanned,
+    error,
   };
 }
 

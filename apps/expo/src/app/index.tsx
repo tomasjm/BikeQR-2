@@ -1,55 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-
-import Scanner from "~/components/Scanner";
-import useScanner, { ScannerHook } from "./hooks/useScanner";
-import { api } from "~/utils/api";
-import QRCode from 'react-native-qrcode-svg';
+import React from "react";
+import { SafeAreaView, Text, TouchableOpacity } from "react-native";
+import Constants from "expo-constants";
+import { useRouter } from "expo-router";
 
 const Index = () => {
-  const { data } = api.bike.listByUserId.useQuery({ userId: "cli7wknah0000tyzw37wgo597" })
-  console.log(data)
-  const [state, setState] = useState(false);
-  const {
-    scanned,
-    hasPermission,
-    setHasPermission,
-    setScanned,
-    handleBarCodeScanned,
-  } = useScanner();
-  const scannerProps: ScannerHook = {
-    scanned,
-    hasPermission,
-    setHasPermission,
-    setScanned,
-    handleBarCodeScanned,
-  };
+  const router = useRouter();
 
   return (
-    <View className="flex h-full items-center p-10 ">
-      {!state && (
-        <TouchableOpacity
-          className="w-32 items-center rounded-md bg-blue-500 p-2 text-base text-white"
-          onPress={() => setState(true)}
-        >
-          <Text>Click me</Text>
-        </TouchableOpacity>
-      )}
-      {state && (
-        <View className="flex items-center gap-2">
-          <Scanner args={scannerProps} />
-          <TouchableOpacity
-            className="w-32 items-center rounded-md bg-blue-500 p-2 text-base text-white"
-            onPress={() => setState(false)}
-          >
-            <Text>Cerrar</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      <QRCode
-        value="http://awesome.link.qr"
-      />
-    </View>
+    <SafeAreaView className="bg-beige-000-color h-full items-center gap-10 p-4">
+      <TouchableOpacity
+        className="bg-green-000-color w-32 items-center rounded-md p-2 text-base text-white"
+        onPress={() => router.push("bikeregistry")}
+      >
+        <Text>Acceder a Registro</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        className="bg-green-000-color w-32 items-center rounded-md p-2 text-base text-white"
+        onPress={() => router.push("bikestatus")}
+      >
+        <Text>Acceder a estado de bicicletas</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 };
 

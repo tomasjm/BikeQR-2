@@ -9,8 +9,15 @@
 //   content: ["./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
 // } satisfies Config;
 
-const config = {
+module.exports = {
   content: ["./src/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        "beige-000-color": "#F0E9CC",
+        "yellow-000-color": "#EFFABB",
+        "green-000-color": "#A2E0A4",
+      },
+    },
+  },
 };
-
-module.exports = config;

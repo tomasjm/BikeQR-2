@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { useRouter } from "expo-router";
 
-import { ScannerHook } from "~/app/hooks/useScanner";
+import { type ScannerHook } from "../hooks/useScanner";
 
 export default function Scanner({ args }: { args: ScannerHook }) {
   const {
@@ -12,7 +13,7 @@ export default function Scanner({ args }: { args: ScannerHook }) {
     setScanned,
     handleBarCodeScanned,
   } = args;
-
+  const router = useRouter();
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -38,21 +39,26 @@ export default function Scanner({ args }: { args: ScannerHook }) {
   }
 
   return (
-    <View className="items-center">
+    <View style={{ flex: 1 }}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        className="h-96 w-screen"
+        className="h-full w-full flex-1"
       />
-
       {scanned && (
-        <TouchableOpacity
-          className="w-36 items-center rounded-xl border-white bg-blue-500"
-          onPress={() => setScanned(false)}
-        >
-          <Text className="text-center text-lg text-white">
-            Escanear de nuevo
-          </Text>
-        </TouchableOpacity>
+        <View className="items-center p-2">
+          <TouchableOpacity
+            className="bg-green-000-color w-32 items-center rounded-md p-2 text-base text-white"
+            onPress={() => setScanned(false)}
+          >
+            <Text>Escanear de nuevo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="bg-green-000-color w-32 items-center rounded-md p-2 text-base text-white"
+            onPress={() => router.back()}
+          >
+            <Text>Volver</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );

@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 importers:
 
@@ -61,6 +65,9 @@ importers:
       expo-barcode-scanner:
         specifier: ~12.3.2
         version: 12.3.2(expo@48.0.11)
+      expo-camera:
+        specifier: ~13.2.1
+        version: 13.2.1(expo@48.0.11)(react@18.2.0)
       expo-constants:
         specifier: ~14.2.1
         version: 14.2.1(expo@48.0.11)
@@ -2237,6 +2244,15 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
+
+  /@koale/useworker@4.0.2(react@18.2.0):
+    resolution: {integrity: sha512-xPIPADtom8/3/4FLNj7MvNcBM/Z2FleH85Fdx2O869eoKW8+PoEgtSVvoxWjCWMA46Sm9A5/R1TyzNGc+yM0wg==}
+    peerDependencies:
+      react: ^16.8.0
+    dependencies:
+      dequal: 1.0.1
+      react: 18.2.0
+    dev: false
 
   /@manypkg/cli@0.20.0:
     resolution: {integrity: sha512-xOAyzHp4cF6+1VxCeVi14k4WJBbKAExuYVA+wXlCHPLoTUv64D2HQrLUOFO8bXtzW9KFhGhdP2xGFq9n9rSDiw==}
@@ -4531,6 +4547,11 @@ packages:
       prop-types: 15.8.1
     dev: false
 
+  /dequal@1.0.1:
+    resolution: {integrity: sha512-Fx8jxibzkJX2aJgyfSdLhr9tlRoTnHKrRJuu2XHlAgKioN2j19/Bcbe0d4mFXYZ3+wpE2KVobUVTfDutcD17xQ==}
+    engines: {node: '>=6'}
+    dev: false
+
   /destroy@1.2.0:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
@@ -5182,6 +5203,18 @@ packages:
     dependencies:
       expo: 48.0.11(@babel/core@7.21.4)
       expo-image-loader: 4.1.1(expo@48.0.11)
+    dev: false
+
+  /expo-camera@13.2.1(expo@48.0.11)(react@18.2.0):
+    resolution: {integrity: sha512-fZdRyF402jJGGmLVlumrLcr5Em9+Y2SO1MIlxLBtHXnybyHbTRMRAbzVapKX1Aryfujqadh+Kl+sdsWYkMuJjg==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      '@koale/useworker': 4.0.2(react@18.2.0)
+      expo: 48.0.11(@babel/core@7.21.4)
+      invariant: 2.2.4
+    transitivePeerDependencies:
+      - react
     dev: false
 
   /expo-constants@14.2.1(expo@48.0.11):
