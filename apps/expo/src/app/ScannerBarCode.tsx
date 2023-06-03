@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { useRouter } from "expo-router";
 
 import Scanner from "~/components/Scanner";
 import useScanner, { ScannerHook } from "~/hooks/useScanner";
@@ -13,6 +14,7 @@ function ScannerBarCode() {
     setScanned,
     handleBarCodeScanned,
     error,
+    data,
   } = useScanner({
     type: BarCodeScanner.Constants.BarCodeType.code128,
   });
@@ -23,6 +25,17 @@ function ScannerBarCode() {
     setScanned,
     handleBarCodeScanned,
   };
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (data) {
+      router.replace({
+        pathname: "BikeRegistry",
+        params: { data },
+      });
+    }
+  }, [data]);
 
   return (
     <View style={{ flex: 1 }}>
