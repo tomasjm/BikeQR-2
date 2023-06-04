@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client"
+import { nanoid } from "nanoid"
 const prisma = new PrismaClient();
 
 async function main() {
@@ -15,12 +16,14 @@ async function main() {
   await prisma.bike.create({
     data: {
       userId,
+      code: nanoid(10),
       description: "Oxford"
     }
   })
   await prisma.bike.create({
     data: {
       userId,
+      code: nanoid(10),
       description: "Marlin"
     }
   })
