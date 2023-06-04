@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { nanoid } from "nanoid";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -11,6 +12,7 @@ export const bikeRouter = createTRPCRouter({
     const { userId, description } = input;
     return ctx.prisma.bike.create({
       data: {
+        code: nanoid(10),
         userId,
         description
       }
@@ -37,7 +39,7 @@ export const bikeRouter = createTRPCRouter({
       }
     })
   }),
-  validateCode: publicProcedure.input(z.object({ code: z.number() })).query(async ({ ctx, input }) => {
+  validateCode: publicProcedure.input(z.object({ code: z.string().length(10) })).query(async ({ ctx, input }) => {
     const { code } = input;
     const data = await ctx.prisma.bike.findMany({
       where: {
@@ -63,4 +65,4 @@ export const bikeRouter = createTRPCRouter({
       error: true
     }
   })
-}); 
+});
