@@ -39,7 +39,7 @@ export const bikeRouter = createTRPCRouter({
       }
     })
   }),
-  validateCode: publicProcedure.input(z.object({ code: z.string().length(10) })).query(async ({ ctx, input }) => {
+  validateCode: publicProcedure.input(z.object({ code: z.string().length(10) })).mutation(async ({ ctx, input }) => {
     const { code } = input;
     const data = await ctx.prisma.bike.findMany({
       where: {
