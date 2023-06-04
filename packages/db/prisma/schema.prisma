@@ -17,14 +17,6 @@ model Token {
     storage       Storage?
 }
 
-model Status {
-    id            Int       @id @default(autoincrement())
-    status        String
-    code          Int
-    createdAt     DateTime  @default(now())
-    updatedAt     DateTime  @updatedAt
-    storage       Storage[]
-}
 model Storage {
     id            String    @id @default(cuid())
     token         Token     @relation(fields: [tokenId], references: [id])
@@ -35,8 +27,7 @@ model Storage {
     attendantId   String 
     bike          Bike      @relation(fields: [bikeId], references: [id])
     bikeId        String 
-    status        Status    @relation(fields: [statusId], references: [id])
-    statusId      Int
+    status        Status    @default(NOT_STORED)
     createdAt     DateTime  @default(now())
     updatedat     DateTime  @updatedAt
     endedAt       DateTime?
@@ -44,7 +35,7 @@ model Storage {
 
 model Bike {
     id            String    @id @default(cuid())
-    code          Int       @default(autoincrement())
+    code          String    @unique
     description   String
     user          User      @relation(fields: [userId], references:[id])
     userId        String 
@@ -69,4 +60,10 @@ model User {
 enum Role {
     USER
     ATTENDANT
+}
+
+enum Status {
+    STORED
+    NOT_STORED
+    CANCELED
 }

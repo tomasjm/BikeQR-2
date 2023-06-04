@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    "target": "es6",
+    "module":  "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+  },
   "extends": "../../tsconfig.json",
-  "include": ["index.ts"]
+  "include": ["prisma/seed.ts","src", "index.ts", "transformer.ts"]
 }
