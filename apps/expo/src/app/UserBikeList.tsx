@@ -13,7 +13,7 @@ export const Item = ({ title }: ItemProps) => (
 );
 function UserBikeList() {
   const { data } = api.bike.listByUserId.useQuery({
-    userId: "cli7wknah0000tyzw37wgo597",
+    userId: "cligobmb80000ty4ejtwwmsek",
   });
   const router = useRouter();
   return (

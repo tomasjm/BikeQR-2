@@ -31,7 +31,7 @@ function ScannerBarCode() {
   useEffect(() => {
     if (data) {
       router.replace({
-        pathname: "BikeRegistry",
+        pathname: "BikeEntry",
         params: { data },
       });
     }

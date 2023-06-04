@@ -23,12 +23,13 @@ const RootLayout = () => {
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            headerTitleAlign: "center",
           }}
         >
           <Stack.Screen name="index" options={{ title: "Inicio" }} />
           <Stack.Screen
-            name="BikeRegistry"
-            options={{ title: "Registro de Bicicletas" }}
+            name="BikeEntry"
+            options={{ title: "Ingreso de Bicicletas" }}
           />
           <Stack.Screen name="ScannerBarCode" options={{ title: "Escáner" }} />
           <Stack.Screen

@@ -6,12 +6,12 @@ const Index = () => {
   const router = useRouter();
 
   return (
-    <SafeAreaView className="bg-beige-000-color h-full items-center gap-10 p-4">
+    <SafeAreaView className="h-full items-center gap-10 p-4">
       <TouchableOpacity
         className="bg-green-000-color w-32 items-center rounded-md p-2 text-base text-white"
-        onPress={() => router.push("/BikeRegistry")}
+        onPress={() => router.push("/BikeEntry")}
       >
-        <Text>Acceder a Registro</Text>
+        <Text>Ingreso de Bicicletas</Text>
       </TouchableOpacity>
       <TouchableOpacity
         className="bg-green-000-color items-center rounded-md p-4 text-base text-white"
