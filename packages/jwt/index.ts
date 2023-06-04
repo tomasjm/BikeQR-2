@@ -1,11 +1,18 @@
 import JWT from 'expo-jwt';
+import dayjs from "dayjs"
 
-interface JWTPayload {
+interface JWTSignPayload {
   [key: string]: unknown
 }
 
-export const sign = (payload: JWTPayload, secret: string) => {
-  return JWT.encode(payload, secret);
+export const sign = (payload: JWTSignPayload, secret: string) => {
+  const iat = dayjs().unix()
+  const customPayload = {
+    ...payload,
+    exp: iat + 3600 * 24,
+    iat
+  }
+  return JWT.encode(customPayload, secret);
 }
 
 export const verify = (token: string, secret: string) => {
