@@ -7,9 +7,23 @@ import { api } from "~/utils/api";
 function BikeRegistry() {
   const router = useRouter();
   const { data } = useSearchParams();
-  const validation = api.bike.validateCode.useQuery({
-    code: parseInt(data as string),
-  });
+  const mutationValidation = api.bike.validateCode.useMutation()
+
+  React.useEffect(() => {
+    if (data) {
+      if (Array.isArray(data) && typeof data[0] == "string") {
+        mutationValidation.mutate({ code: data[0] })
+      } else if (typeof data == "string") {
+        mutationValidation.mutate({ code: data })
+      }
+    }
+  }, [data])
+
+  React.useEffect(() => {
+    if (mutationValidation.isSuccess) {
+      console.log(mutationValidation.data)
+    }
+  }, [mutationValidation.isSuccess])
   return (
     <View className="flex-1">
       <View className="flex-1 items-center pt-10">
@@ -25,7 +39,7 @@ function BikeRegistry() {
         </TouchableOpacity>
       </View>
 
-      {validation && (
+      {(mutationValidation.isSuccess && mutationValidation.data) && (
         <View className="flex-1 items-center pt-10">
           <Text className="font-semibold">{String(data)}</Text>
         </View>
