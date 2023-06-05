@@ -4,26 +4,27 @@ import { useRouter, useSearchParams } from "expo-router";
 
 import { api } from "~/utils/api";
 
-function BikeRegistry() {
+
+function BikeStorage() {
   const router = useRouter();
   const { data } = useSearchParams();
-  const mutationValidation = api.bike.validateCode.useMutation()
+  const mutationValidation = api.bike.validateCode.useMutation();
 
   React.useEffect(() => {
     if (data) {
       if (Array.isArray(data) && typeof data[0] == "string") {
-        mutationValidation.mutate({ code: data[0] })
+        mutationValidation.mutate({ code: data[0] });
       } else if (typeof data == "string") {
-        mutationValidation.mutate({ code: data })
+        mutationValidation.mutate({ code: data });
       }
     }
-  }, [data])
+  }, [data]);
 
   React.useEffect(() => {
     if (mutationValidation.isSuccess) {
-      console.log(mutationValidation.data)
+      console.log(mutationValidation.data);
     }
-  }, [mutationValidation.isSuccess])
+  }, [mutationValidation.isSuccess]);
   return (
     <View className="flex-1">
       <View className="flex-1 items-center pt-10">
@@ -39,7 +40,7 @@ function BikeRegistry() {
         </TouchableOpacity>
       </View>
 
-      {(mutationValidation.isSuccess && mutationValidation.data) && (
+      {mutationValidation.isSuccess && mutationValidation.data && (
         <View className="flex-1 items-center pt-10">
           <Text className="font-semibold">{String(data)}</Text>
         </View>
@@ -48,4 +49,4 @@ function BikeRegistry() {
   );
 }
 
-export default BikeRegistry;
+export default BikeStorage;
