@@ -6,9 +6,9 @@ import { api } from "~/utils/api";
 
 const MyForm = () => {
   const [userId, setUserId] = useState("");
-  const { data } = api.bike.createByUserId.useMutation();
 
   const [description, setDescription] = useState("");
+  const registerBike = api.bike.createByUserId.useMutation();
 
   const handleUserIdChange = (text: string) => {
     setUserId(text);
@@ -19,8 +19,7 @@ const MyForm = () => {
   };
 
   const handleSubmit = () => {
-    console.log("User ID:", userId);
-    console.log("Description:", description);
+    registerBike.mutate({ userId, description });
   };
 
   return (
