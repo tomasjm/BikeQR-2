@@ -21,7 +21,7 @@ function UserBikeList() {
       <BikeList data={data} />
 
       <TouchableOpacity
-        className="bg-green-000-color w-32 items-center rounded-md p-2 text-base text-white"
+        className="bg-green-000-color w-32 items-center rounded-md border p-2 text-base text-white"
         onPress={() => router.back()}
       >
         <Text>Volver</Text>
