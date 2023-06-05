@@ -45,7 +45,7 @@ export default function Scanner({ args }: { args: ScannerHook }) {
       {scanned && (
         <View className="items-center p-2">
           <TouchableOpacity
-            className="bg-green-000-color w-32 items-center rounded-md p-2 text-base text-white"
+            className="bg-green-000-color w-32 items-center rounded-md border p-2 text-base text-white"
             onPress={() => setScanned(false)}
           >
             <Text>Escanear de nuevo</Text>

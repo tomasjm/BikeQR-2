@@ -31,7 +31,7 @@ function ScannerBarCode() {
   useEffect(() => {
     if (data) {
       router.replace({
-        pathname: "BikeStorage",
+        pathname: "/home/Storage",
         params: { data },
       });
     }

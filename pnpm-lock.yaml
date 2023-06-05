@@ -44,6 +44,9 @@ importers:
       '@expo/metro-config':
         specifier: ^0.7.1
         version: 0.7.1
+      '@expo/vector-icons':
+        specifier: ^13.0.0
+        version: 13.0.0
       '@shopify/flash-list':
         specifier: 1.4.2
         version: 1.4.2(@babel/runtime@7.21.0)(react-native@0.71.7)(react@18.2.0)

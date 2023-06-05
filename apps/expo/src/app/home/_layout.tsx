@@ -12,6 +12,7 @@ export default () => {
         tabBarStyle: {
           backgroundColor: "#F0E9CC",
         },
+
         tabBarShowLabel: false,
         tabBarInactiveTintColor: "#000",
         tabBarActiveTintColor: "#FFFFFF",
