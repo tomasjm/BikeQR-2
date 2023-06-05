@@ -9,12 +9,12 @@ export default () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#F0E9CC",
         },
-        tabBarActiveTintColor: "red",
-
+        tabBarShowLabel: false,
+        tabBarInactiveTintColor: "#000",
+        tabBarActiveTintColor: "#FFFFFF",
         headerStyle: {
           backgroundColor: "#F0E9CC",
         },
@@ -29,8 +29,8 @@ export default () => {
         name="HomePage"
         options={{
           title: "Inicio",
-          tabBarIcon: () => (
-            <FontAwesome name="home" size={24} color="black"></FontAwesome>
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="home" size={24} color={color}></FontAwesome>
           ),
         }}
       />
@@ -38,26 +38,26 @@ export default () => {
         name="Register"
         options={{
           title: "Registro",
-          tabBarIcon: () => (
-            <Octicons name="person-add" size={24} color="black" />
+          tabBarIcon: ({ color }) => (
+            <Octicons name="person-add" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="Storage"
         options={{
-          title: "Ingreso de Bicicletas",
-          tabBarIcon: () => (
-            <Octicons name="diff-added" size={24} color="black" />
+          title: "Ingreso",
+          tabBarIcon: ({ color }) => (
+            <Octicons name="diff-added" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="Status"
         options={{
-          title: "Estado de bicicletas",
-          tabBarIcon: () => (
-            <MaterialCommunityIcons name="bike" size={24} color="black" />
+          title: "Estado",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="bike" size={24} color={color} />
           ),
         }}
       />
