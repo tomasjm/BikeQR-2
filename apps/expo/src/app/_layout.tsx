@@ -9,7 +9,7 @@ import { TRPCProvider } from "~/utils/api";
 const RootLayout = () => {
   return (
     <TRPCProvider>
-      <SafeAreaProvider>
+      <SafeAreaProvider className="">
         {/*
           The Stack component displays the current page.
           It also allows you to configure your screens 
@@ -17,7 +17,7 @@ const RootLayout = () => {
         <Stack
           screenOptions={{
             headerStyle: {
-              backgroundColor: "#F0E9CC",
+              backgroundColor: "#FFFFFF",
             },
             headerTintColor: "#000",
             headerTitleStyle: {

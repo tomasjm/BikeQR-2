@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
 import { api } from "~/utils/api";
@@ -17,7 +18,7 @@ function UserBikeList() {
   });
   const router = useRouter();
   return (
-    <View className="items-center">
+    <SafeAreaView className="flex-1 items-center bg-white">
       <BikeList data={data} />
 
       <TouchableOpacity
@@ -26,7 +27,7 @@ function UserBikeList() {
       >
         <Text>Volver</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 

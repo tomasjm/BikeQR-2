@@ -28,7 +28,7 @@ const BikeRegister = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <View className="mx-4 space-y-2 pb-2">
         <TextInput
           placeholder="User ID"

@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter, useSearchParams } from "expo-router";
 
 import { api } from "~/utils/api";
@@ -25,8 +26,8 @@ function Storage() {
     }
   }, [mutationValidation.isSuccess]);
   return (
-    <View className="flex-1">
-      <View className="flex-1 items-center pt-10">
+    <SafeAreaView className="flex-1 bg-white">
+      <View className=" items-center ">
         <TouchableOpacity
           className="bg-green-000-color w-32 items-center rounded-md border p-2 text-base text-white"
           onPress={() =>
@@ -44,7 +45,7 @@ function Storage() {
           <Text className="font-semibold">{String(data)}</Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 

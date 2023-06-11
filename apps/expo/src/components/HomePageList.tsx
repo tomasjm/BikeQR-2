@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
 function HomePageList() {
@@ -30,19 +31,24 @@ function HomePageList() {
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <TouchableOpacity
-          className="  bg-white p-2"
+          className="bg-white p-4"
           onPress={() => router.push(item.screen)}
         >
           <View
             key={item.id}
-            className="flex-row space-x-4 rounded-md border border-gray-200 bg-white p-4"
+            className="flex-row items-end space-x-4 rounded-md border border-gray-200 bg-white p-1 px-8 shadow-md shadow-black"
           >
-            <Image className="h-44 w-44 " source={item.image} />
-            <Text className="items-center font-bold">{item.title}</Text>
+            <Image
+              className="h-40 w-40"
+              style={{ resizeMode: "contain" }}
+              source={item.image}
+            />
+            <Text className="justify-center text-base font-bold">
+              {item.title}
+            </Text>
           </View>
         </TouchableOpacity>
       )}
-      className="pb-20"
     />
   );
 }

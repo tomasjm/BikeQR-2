@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useRouter } from "expo-router";
 
@@ -38,7 +39,7 @@ function ScannerBarCode() {
   }, [data]);
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView className="flex-1 bg-white">
       <Scanner args={scannerProps} />
       {error && (
         <View className="items-center p-2">
@@ -47,7 +48,7 @@ function ScannerBarCode() {
           </Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -6,7 +6,7 @@ const Status = () => {
   const router = useRouter();
 
   return (
-    <SafeAreaView className="h-full items-center gap-10 p-4">
+    <SafeAreaView className="flex-1 items-center gap-10 bg-white p-4">
       <TouchableOpacity
         className="bg-green-000-color items-center rounded-md border p-4 text-base text-white"
         onPress={() => router.push("/UserBikeList")}

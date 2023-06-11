@@ -37,10 +37,10 @@ export default function Scanner({ args }: { args: ScannerHook }) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1">
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        className="h-full w-full flex-1"
+        className="mb-20 flex-1"
       />
       {scanned && (
         <View className="items-center p-2">

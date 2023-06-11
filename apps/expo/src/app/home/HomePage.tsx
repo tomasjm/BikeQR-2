@@ -1,16 +1,17 @@
 import React from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import HomePageList from "~/components/HomePageList";
 
 const HomePage = () => {
   return (
-    <View className="h-full items-center bg-white p-4">
-      <Text className="text-2xl">Bienvenido a BikeQR</Text>
-      <View>
-        <HomePageList></HomePageList>
+    <SafeAreaView className="flex-1 items-center bg-white">
+      <Text className="text-2xl font-bold">Bienvenido a BikeQR</Text>
+      <View className="flex-1">
+        <HomePageList />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

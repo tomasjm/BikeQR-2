@@ -59,7 +59,7 @@ const Index = () => {
   };
 
   return (
-    <SafeAreaView className="bg-beige-000-color h-full items-center gap-10 p-4">
+    <SafeAreaView className="flex-1 items-center gap-10 bg-white p-4">
       <TouchableOpacity
         className="bg-green-000-color w-32 items-center rounded-md border p-2 text-base text-white"
         onPress={() => router.push("/BikeRegistry")}
