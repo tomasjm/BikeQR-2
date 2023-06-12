@@ -26,7 +26,24 @@ const RootLayout = () => {
             headerTitleAlign: "center",
           }}
         >
-          <Stack.Screen name="index" options={{ title: "Inicio" }} />
+          <Stack.Screen
+            name="index"
+            options={{ title: "Inicio", headerShown: false }}
+          />
+          <Stack.Screen
+            name="auth/UserRegister"
+            options={{
+              title: "BIKEQR",
+              headerStyle: { backgroundColor: "#FFD23A" },
+            }}
+          />
+          <Stack.Screen
+            name="auth/UserLogin"
+            options={{
+              title: "BIKEQR",
+              headerStyle: { backgroundColor: "#FFD23A" },
+            }}
+          />
           <Stack.Screen name="home" options={{ headerShown: false }} />
           <Stack.Screen
             name="BikeRegister"
