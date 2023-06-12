@@ -29,7 +29,7 @@ function Storage() {
     <SafeAreaView className="flex-1 bg-white">
       <View className=" items-center ">
         <TouchableOpacity
-          className="bg-green-000-color w-32 items-center rounded-md border p-2 text-base text-white"
+          className="bg-yellow-000-color w-32 items-center rounded-md border p-2 text-base text-white"
           onPress={() =>
             router.push({
               pathname: "ScannerBarCode",

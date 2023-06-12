@@ -45,7 +45,7 @@ const BikeRegister = () => {
       </View>
       <View className="mx-4 items-center">
         <TouchableOpacity
-          className="bg-green-000-color rounded-md border p-2 px-4"
+          className="bg-yellow-000-color rounded-md border p-2 px-4"
           onPress={() => handleSubmit()}
         >
           <Text>Submit</Text>
