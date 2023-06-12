@@ -14,10 +14,12 @@
     "seed": "npx prisma db seed"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node --esm prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "nanoid": "^4.0.2"
   },
   "devDependencies": {

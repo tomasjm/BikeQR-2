@@ -55,6 +55,7 @@ model User {
     updatedAt           DateTime    @updatedAt
     storageUser         Storage[]   @relation("UserStorage")
     storageAttendant    Storage[]   @relation("AttendantStorage")
+    expoPushToken       String      @default("") 
 }
 
 enum Role {

@@ -1,8 +1,10 @@
 import { PrismaClient } from "@prisma/client"
 import { nanoid } from "nanoid"
 const prisma = new PrismaClient();
+import bcrypt from "bcrypt"
 
 async function main() {
+  const hash = await bcrypt.hash("pass", 10)
   const { id: userId } = await prisma.user.upsert({
     where: { email: "user@ufromail.cl" },
     update: {
@@ -10,7 +12,7 @@ async function main() {
     create: {
       email: "user@ufromail.cl",
       name: "UserName",
-      password: "pass",
+      password: hash,
     }
   })
   await prisma.bike.create({

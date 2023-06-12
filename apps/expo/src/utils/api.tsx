@@ -12,6 +12,10 @@ import { type AppRouter } from "@acme/api";
  */
 export const api = createTRPCReact<AppRouter>();
 export { type RouterInputs, type RouterOutputs } from "@acme/api";
+export let token: string = "a";
+export const setToken = (newToken: string) => {
+  token = newToken;
+}
 
 /**
  * Extend this function when going to production by
@@ -55,6 +59,11 @@ export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
       links: [
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
+          headers() {
+            return {
+              Authorization: `Bearer ${token}`
+            }
+          }
         }),
       ],
     }),
