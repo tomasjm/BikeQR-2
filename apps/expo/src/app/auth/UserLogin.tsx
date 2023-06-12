@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { FontAwesome, Foundation } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { api, setToken } from "~/utils/api";
 import { UserRegisterProps } from "./UserRegister";
@@ -24,20 +25,21 @@ export default function UserLogin() {
     userLoginMutation.mutate({ email, password });
   };
 
-  // useEffect(() => {
-  //   if (formState.isSubmitSuccessful) {
-  //     reset();
-  //     router.push("/home");
-  //   }
-  // }, [formState, reset]);
-
   useEffect(() => {
+    const storeData = async (token: string) => {
+      try {
+        await AsyncStorage.setItem('@token', token)
+      } catch (e) {
+        alert("error " + e)
+      }
+    }
     if (userLoginMutation.isSuccess && !userLoginMutation.data?.error) {
       const token = userLoginMutation.data?.token;
       setToken(token as string);
+      storeData(token as string);
       router.push("/home");
-    } else {
-      alert(userLoginMutation.data?.msg);
+    } else if (userLoginMutation.data?.error) {
+      alert("error:" + userLoginMutation.data?.msg);
     }
   }, [userLoginMutation.isSuccess]);
   return (

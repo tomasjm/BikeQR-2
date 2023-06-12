@@ -34,7 +34,7 @@ export const authRouter = createTRPCRouter({
     }
     return {
       error: true,
-      msg: "no se pudo crear usuario"
+      msg: "Hubo un problema interno, intentalo nuevamente"
     }
   }),
   login: publicProcedure.input(z.object({ email: z.string(), password: z.string() })).mutation(async ({ ctx, input }) => {
