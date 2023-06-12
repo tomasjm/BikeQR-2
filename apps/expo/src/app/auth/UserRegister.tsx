@@ -26,12 +26,17 @@ export default function UserRegister() {
     userRegisterMutation.mutate({ email, password });
   };
   const router = useRouter();
+  // useEffect(() => {
+  //   if (formState.isSubmitSuccessful) {
+  //     reset();
+  //     router.back();
+  //   }
+  // }, [formState, reset]);
   useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset();
+    if (userRegisterMutation.isSuccess && !userRegisterMutation.data?.error) {
       router.back();
     }
-  }, [formState, reset]);
+  }, [userRegisterMutation.isSuccess]);
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="space-y-4">

@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import { FontAwesome, Foundation } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
 
-import { api } from "~/utils/api";
+import { api, setToken } from "~/utils/api";
 import { UserRegisterProps } from "./UserRegister";
 
 export default function UserLogin() {
@@ -23,12 +23,23 @@ export default function UserLogin() {
     const password = data.password;
     userLoginMutation.mutate({ email, password });
   };
+
+  // useEffect(() => {
+  //   if (formState.isSubmitSuccessful) {
+  //     reset();
+  //     router.push("/home");
+  //   }
+  // }, [formState, reset]);
+
   useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset();
+    if (userLoginMutation.isSuccess && !userLoginMutation.data?.error) {
+      const token = userLoginMutation.data?.token;
+      setToken(token as string);
       router.push("/home");
+    } else {
+      alert(userLoginMutation.data?.msg);
     }
-  }, [formState, reset]);
+  }, [userLoginMutation.isSuccess]);
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="space-y-4">
@@ -68,7 +79,7 @@ export default function UserLogin() {
                 name="email"
               />
               {errors.email && (
-                <Text className="text-red-600">Campo requerido</Text>
+                <Text className="pl-[40px] text-red-600">Campo requerido</Text>
               )}
             </View>
             <View>
@@ -94,7 +105,7 @@ export default function UserLogin() {
                 name="password"
               />
               {errors.password && (
-                <Text className="text-red-600">Campo requerido</Text>
+                <Text className="pl-[40px] text-red-600">Campo requerido</Text>
               )}
             </View>
           </View>
