@@ -30,10 +30,9 @@ const Index = () => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
-      console.log(mutation.data);
-      setStorageId(mutation.data.id);
+      setStorageId(mutation.data.storage!.id);
       console.log("confirmando storage...");
-      mutationConfirm.mutate({ storageId: mutation.data.id });
+      mutationConfirm.mutate({ storageId: mutation.data.storage!.id });
     }
   }, [mutation.isSuccess]);
 
@@ -52,9 +51,8 @@ const Index = () => {
 
   const handleStartStorage = () => {
     mutation.mutate({
-      attendantId: "clihr51mm0000tyal6dqkg8yy",
-      userId: "cligobmb80000ty4ejtwwmsek",
-      bikeId: "cligobnps0003ty4e0wu3tvo5",
+      userId: "clis4gjt80000tys9hdep7boh",
+      bikeId: "clis4gl6f0003tys99s39y85q",
     });
   };
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Expo } from "expo-server-sdk"
+import { Expo, ExpoPushMessage } from "expo-server-sdk"
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 
@@ -36,4 +36,31 @@ export const notificationsRouter = createTRPCRouter({
       msg: "No se ha podido guardar el token, intenta nuevamente"
     }
   }),
+  sendNotification: protectedProcedure.input(z.object({ toUserId: z.string(), title: z.string(), body: z.string(), data: z.object({ type: z.string() }).partial() })).mutation(async ({ ctx, input }) => {
+    const { userId: fromUserId } = ctx;
+    const { toUserId, title, body, data } = input;
+    const toUser = await ctx.prisma.user.findUnique({
+      where: {
+        id: toUserId
+      }
+    })
+    if (toUser?.expoPushToken) {
+      const token = toUser.expoPushToken;
+      let expo = new Expo()
+      if (Expo.isExpoPushToken(token)) {
+        const msg: ExpoPushMessage = {
+          to: token,
+          sound: "default",
+          title,
+          body,
+          data: {
+            fromUserId,
+            ...data
+          }
+        }
+        await expo.sendPushNotificationsAsync([msg]);
+      }
+    }
+
+  })
 });

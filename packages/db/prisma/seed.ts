@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, Role } from "@prisma/client"
 import { nanoid } from "nanoid"
 const prisma = new PrismaClient();
 import bcrypt from "bcrypt"
@@ -12,6 +12,17 @@ async function main() {
     create: {
       email: "user@ufromail.cl",
       name: "UserName",
+      password: hash,
+    }
+  })
+  await prisma.user.upsert({
+    where: { email: "admin@ufromail.cl" },
+    update: {
+    },
+    create: {
+      email: "admin@ufromail.cl",
+      name: "admin",
+      role: Role.ATTENDANT,
       password: hash,
     }
   })

@@ -18,8 +18,9 @@ const HomePage = () => {
 
   useEffect(() => {
     if (notification) {
-      alert(notification.title)
+      alert(JSON.stringify(notification.request.content.data))
     }
+
   }, [notification])
 
   useEffect(() => {
