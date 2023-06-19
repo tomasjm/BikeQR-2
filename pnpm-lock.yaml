@@ -77,9 +77,15 @@ importers:
       expo-constants:
         specifier: ~14.2.1
         version: 14.2.1(expo@48.0.11)
+      expo-device:
+        specifier: ~5.2.1
+        version: 5.2.1(expo@48.0.11)
       expo-linking:
         specifier: ~4.0.1
         version: 4.0.1(expo@48.0.11)
+      expo-notifications:
+        specifier: ~0.18.1
+        version: 0.18.1(expo@48.0.11)
       expo-router:
         specifier: ^1.5.3
         version: 1.5.3(expo-constants@14.2.1)(expo-linking@4.0.1)(expo-modules-autolinking@1.2.0)(expo-status-bar@1.4.4)(expo@48.0.11)(metro@0.76.1)(react-dom@18.2.0)(react-native-gesture-handler@2.9.0)(react-native-safe-area-context@4.5.1)(react-native-screens@3.20.0)(react-native@0.71.7)(react@18.2.0)
@@ -2186,6 +2192,10 @@ packages:
       - supports-color
     dev: false
 
+  /@ide/backoff@1.0.0:
+    resolution: {integrity: sha512-F0YfUDjvT+Mtt/R4xdl2X0EYCHMMiJqNLdxHD++jDT5ydEFIyqbCHh51Qx2E211dgZprPKhV7sHmnXKpLuvc5g==}
+    dev: false
+
   /@jest/create-cache-key-function@29.3.1:
     resolution: {integrity: sha512-4i+E+E40gK13K78ffD/8cy4lSSqeWwyXeTZoq16tndiCP12hC8uQsPJdIu5C6Kf22fD8UbBk71so7s/6VwpUOQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -3557,6 +3567,15 @@ packages:
     resolution: {integrity: sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==}
     dev: false
 
+  /assert@2.0.0:
+    resolution: {integrity: sha512-se5Cd+js9dXJnu6Ag2JFc00t+HmHOen+8Q+L7O9zI0PqQXr20uk2J0XQqMxZEeo5U50o8Nvmmx7dZrl+Ufr35A==}
+    dependencies:
+      es6-object-assign: 1.1.0
+      is-nan: 1.3.2
+      object-is: 1.1.5
+      util: 0.12.5
+    dev: false
+
   /assign-symbols@1.0.0:
     resolution: {integrity: sha512-Q+JC7Whu8HhmTdBph/Tq59IoRtoy6KAm5zzPv00WdujX82lbAL8K7WVjne7vdCsAmbF4AYaDOPyO3k0kl8qIrw==}
     engines: {node: '>=0.10.0'}
@@ -3762,6 +3781,10 @@ packages:
       babel-plugin-syntax-trailing-function-commas: 7.0.0-beta.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /badgin@1.2.3:
+    resolution: {integrity: sha512-NQGA7LcfCpSzIbGRbkgjgdWkjy7HI+Th5VLxTJfW5EeaAf3fnS+xWQaQOCYiny+q6QSvxqoSO04vCx+4u++EJw==}
     dev: false
 
   /balanced-match@1.0.2:
@@ -4942,6 +4965,10 @@ packages:
       is-symbol: 1.0.4
     dev: false
 
+  /es6-object-assign@1.1.0:
+    resolution: {integrity: sha512-MEl9uirslVwqQU369iHNWZXsI8yaZYGg/D65aOgZkeyFJwHYSxilf7rQzXKI7DdDuBPrBXbfk3sl9hJhmd5AUw==}
+    dev: false
+
   /escalade@3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
     engines: {node: '>=6'}
@@ -5369,6 +5396,15 @@ packages:
       - supports-color
     dev: false
 
+  /expo-device@5.2.1(expo@48.0.11):
+    resolution: {integrity: sha512-ZWGph+fGQPxo9v2e0YygPb45Hl+ZR3mh4tpLY5AOYK/sNjQy+Lu3T/sLGIdi2TOcYNL2oZwzZ6eGvwVYmdIfLg==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 48.0.11(@babel/core@7.21.4)
+      ua-parser-js: 0.7.35
+    dev: false
+
   /expo-file-system@15.2.2(expo@48.0.11):
     resolution: {integrity: sha512-LFkOLcWwlmnjkURxZ3/0ukS35OswX8iuQknLHRHeyk8mUA8fpRPPelD/a1lS+yclqfqavMJmTXVKM1Nsq5XVMA==}
     peerDependencies:
@@ -5438,6 +5474,26 @@ packages:
     dependencies:
       compare-versions: 3.6.0
       invariant: 2.2.4
+    dev: false
+
+  /expo-notifications@0.18.1(expo@48.0.11):
+    resolution: {integrity: sha512-lOEiuPE6ubkS5u7Nj/57gkmUGD/MxsRTC6bg9SGJqXIitBQZk3Tmv9y8bjTrn71n7DsrH8K7xCZTbVwr+kLQGg==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      '@expo/image-utils': 0.3.22
+      '@ide/backoff': 1.0.0
+      abort-controller: 3.0.0
+      assert: 2.0.0
+      badgin: 1.2.3
+      expo: 48.0.11(@babel/core@7.21.4)
+      expo-application: 5.1.1(expo@48.0.11)
+      expo-constants: 14.2.1(expo@48.0.11)
+      fs-extra: 9.1.0
+      uuid: 3.4.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
     dev: false
 
   /expo-router@1.5.3(expo-constants@14.2.1)(expo-linking@4.0.1)(expo-modules-autolinking@1.2.0)(expo-status-bar@1.4.4)(expo@48.0.11)(metro@0.76.1)(react-dom@18.2.0)(react-native-gesture-handler@2.9.0)(react-native-safe-area-context@4.5.1)(react-native-screens@3.20.0)(react-native@0.71.7)(react@18.2.0):
@@ -6482,6 +6538,13 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /is-generator-function@1.0.10:
+    resolution: {integrity: sha512-jsEjy9l3yiXEQ+PsXdmBwEPcOxaXWLspKdplFUVI9vq1iZgIekeC0L167qeu86czQaxed3q/Uzuw0swL0irL8A==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      has-tostringtag: 1.0.0
+    dev: false
+
   /is-glob@2.0.1:
     resolution: {integrity: sha512-a1dBeB19NXsf/E0+FHqkagizel/LQw2DjSQpvQrj3zT+jYPpaUCryPnrQajXKFLCMuf4I6FhRpaGtw4lPrG6Eg==}
     engines: {node: '>=0.10.0'}
@@ -6509,6 +6572,14 @@ packages:
 
   /is-map@2.0.2:
     resolution: {integrity: sha512-cOZFQQozTha1f4MxLFzlgKYPTyj26picdZTx82hbc/Xf4K/tZOOXSCkMvU4pKioRXGDLJRn0GM7Upe7kR721yg==}
+    dev: false
+
+  /is-nan@1.3.2:
+    resolution: {integrity: sha512-E+zBKpQ2t6MEo1VsonYmluk9NxGrbzpeeLC2xIViuO2EjU2xsXsBPwTr3Ykv9l08UYEVEdWeRZNouaZqF6RN0w==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.4
     dev: false
 
   /is-negative-zero@2.0.2:
@@ -10484,6 +10555,10 @@ packages:
     resolution: {integrity: sha512-f9BESNVhzlhEFf2CHMSj40NWOjYPl1YKYbrvIr/hFTDEmLq7SRbWvm7FcdcpCYT95zrOhC7gZSxjdnnTpBcwVw==}
     dev: false
 
+  /ua-parser-js@0.7.35:
+    resolution: {integrity: sha512-veRf7dawaj9xaWEu9HoTVn5Pggtc/qj+kqTOFvNiN1l0YdxwC1kvel57UCjThjGa3BHBihE8/UJAHI+uQHmd/g==}
+    dev: false
+
   /uglify-es@3.3.9:
     resolution: {integrity: sha512-r+MU0rfv4L/0eeW3xZrd16t4NZfK8Ld4SWVglYBb7ez5uXFWHuVRs6xCTrf1yirs9a4j4Y27nn7SRfO6v67XsQ==}
     engines: {node: '>=0.8.0'}
@@ -10650,6 +10725,16 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  /util@0.12.5:
+    resolution: {integrity: sha512-kZf/K6hEIrWHI6XqOFUiiMa+79wE/D8Q+NCNAWclkyg3b4d2k7s0QGepNjiABc+aR3N1PAyHL7p6UcLY6LmrnA==}
+    dependencies:
+      inherits: 2.0.4
+      is-arguments: 1.1.1
+      is-generator-function: 1.0.10
+      is-typed-array: 1.1.10
+      which-typed-array: 1.1.9
+    dev: false
 
   /utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
