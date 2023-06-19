@@ -92,6 +92,7 @@ export const storageRouter = createTRPCRouter({
     }
   }),
   finishStorageProcess: protectedProcedure.input(z.object({ token: z.string(), bikeCode: z.string().length(10) })).mutation(async ({ ctx, input }) => {
+    const caller = appRouter.createCaller({ ...ctx });
     const { token, bikeCode } = input;
     let payload;
     try {
@@ -104,7 +105,7 @@ export const storageRouter = createTRPCRouter({
         msg: "El token ha expirado"
       }
     }
-    const { userId, attendantId, bikeId } = payload as { userId: string; attendantId: string; bikeId: string; };
+    const { userId, bikeId } = payload as { userId: string; bikeId: string; };
     // Busca si hay una bicicleta que contenga un registro de storage y además tenga Status.STORED
     // también que esté asociada a los datos que viene del token
     const bike = await ctx.prisma.bike.findUnique({
@@ -153,6 +154,8 @@ export const storageRouter = createTRPCRouter({
             status: Status.COMPLETED
           }
         })
+        caller.notifications.sendNotification({ toUserId: userId, title: "Se ha retirado la bicicleta", body: "Se ha retirado la bicicleta", data: { type: "FINISH_STORAGE" } })
+
         return {
           msg: "Se ha completado el proceso de retiro éxitosamente",
           error: false
