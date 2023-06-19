@@ -20,7 +20,7 @@ export default function UserLogin() {
   const router = useRouter();
   const userLoginMutation = api.auth.login.useMutation();
   const onSubmit = (data: any) => {
-    const email = data.email;
+    const email = data.email.toLowerCase();
     const password = data.password;
     userLoginMutation.mutate({ email, password });
   };
@@ -97,6 +97,8 @@ export default function UserLogin() {
                       style={{ width: 30, height: 30 }}
                     />
                     <TextInput
+                      secureTextEntry={true}
+                      autoCapitalize="none"
                       className="flex-1 rounded-md border p-3"
                       placeholder="Contraseña"
                       onChangeText={onChange}
