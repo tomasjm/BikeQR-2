@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
-import { Redirect } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { api, setToken } from "../utils/api";
 
 const Index = () => {
   const checkSessionMutation = api.auth.checkSession.useMutation();
+  const router = useRouter()
 
   // Se carga el token del AsyncStorage
   useEffect(() => {
@@ -17,6 +18,8 @@ const Index = () => {
           setToken(token)
           checkSessionMutation.mutate()
           // value previously stored
+        } else {
+          router.replace("/auth/UserLogin")
         }
       } catch (e) {
         alert("error " + e)
@@ -37,6 +40,7 @@ const Index = () => {
 
   return (
     <View className="flex-1 items-center justify-center">
+      <Text>hola mundo</Text>
       {checkSessionMutation.isLoading && (
         <View>
           <ActivityIndicator size="large" color="#000" />
