@@ -1,46 +1,67 @@
 import React, { useEffect } from "react";
-import { SafeAreaView, Text, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import { ActivityIndicator, SafeAreaView, Text, TouchableOpacity } from "react-native";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
-import { api } from "../utils/api";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { bikeAtom, scannedDataAtom, ScannedData } from "~/atoms";
+import { useAtom } from "jotai";
+import { api } from "~/utils/api";
 
 const Index = () => {
   const router = useRouter();
-  const mutation = api.storage.finishStorageProcess.useMutation();
-  const handleFinishStorage = () => {
-    mutation.mutate({
-      token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbGlnb2JtYjgwMDAwdHk0ZWp0d3dtc2VrIiwiYXR0ZW5kYW50SWQiOiJjbGlocjUxbW0wMDAwdHlhbDZkcWtnOHl5IiwiYmlrZUlkIjoiY2xpZ29ibnBzMDAwM3R5NGUwd3UzdHZvNSIsImV4cCI6MTY4NTk5MzEzOSwiaWF0IjoxNjg1OTA2NzM5fQ.zuH_WC6Pb6Mxe4Y99-ko19EmxwRwW0UILMKEy3SQ_Ow",
-      bikeCode: "Ov-rsFJmlw",
-    });
-  };
+  const [bike, setBike] = useAtom(bikeAtom);
+  const [scannedData, setScannedData] = useAtom(scannedDataAtom);
+
+  const { data, type } = useLocalSearchParams()
+
+
+  const finishStorageMutation = api.storage.finishStorageProcess.useMutation()
 
   useEffect(() => {
-    if (mutation.isSuccess) {
-      console.log(mutation.data);
+    if (type == BarCodeScanner.Constants.BarCodeType.qr) {
+      console.log("finish")
+      setScannedData({ data, type } as ScannedData)
+      const token = data as string;
+      const bikeCode = bike as string;
+      finishStorageMutation.mutate({ token, bikeCode })
+
     }
-  }, [mutation.isSuccess]);
+    if (type == BarCodeScanner.Constants.BarCodeType.code128) {
+      console.log("se ha leido bicicleta", data)
+      setBike(data as string);
+      setScannedData({ data, type } as ScannedData)
+    }
+  }, [type])
+
+  useEffect(() => {
+    if (finishStorageMutation.isSuccess) {
+      alert("se ha finalizado")
+    }
+  }, [finishStorageMutation.isSuccess])
 
   return (
     <SafeAreaView className="flex-1 items-center gap-10 bg-white p-4">
-      <TouchableOpacity
-        className="bg-yellow-000-color w-32 items-center rounded-md border p-2 text-base text-white"
-        onPress={() => router.push("/BikeRegistry")}
-      >
-        <Text>Acceder a Registro</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        className="bg-yellow-000-color items-center rounded-md border p-4 text-base text-white"
-        onPress={() => router.push("/UserBikeList")}
-      >
-        <Text>Acceder a estado de bicicletas</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        className="bg-yellow-000-color items-center rounded-md border p-4 text-base text-white"
-        onPress={() => handleFinishStorage()}
-      >
-        <Text>Finish storage</Text>
-      </TouchableOpacity>
+      {bike ? (
+        <>
+          <TouchableOpacity
+            className="bg-yellow-000-color items-center rounded-md border p-4 text-base text-white"
+            onPress={() => router.push({ pathname: "ScannerBarCode", params: { backPath: "FinishStorage" } })}
+          >
+            <Text>Finish storage reading QR</Text>
+          </TouchableOpacity>
+          <>
+            {finishStorageMutation.isLoading && <ActivityIndicator />}
+          </>
+        </>
+      ) : (
+        <TouchableOpacity
+          className="bg-yellow-000-color items-center rounded-md border p-4 text-base text-white"
+          onPress={() => router.push({ pathname: "ScannerBarCode", params: { backPath: "FinishStorage" } })}
+        >
+          <Text>Read code128</Text>
+        </TouchableOpacity>
+
+      )}
     </SafeAreaView>
   );
 };
