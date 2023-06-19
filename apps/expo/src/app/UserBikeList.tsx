@@ -13,9 +13,7 @@ export const Item = ({ title }: ItemProps) => (
   </View>
 );
 function UserBikeList() {
-  const { data } = api.bike.listByUserId.useQuery({
-    userId: "cligobmb80000ty4ejtwwmsek",
-  });
+  const { data } = api.bike.listUserBikes.useQuery();
   const router = useRouter();
   return (
     <SafeAreaView className="flex-1 items-center bg-white">

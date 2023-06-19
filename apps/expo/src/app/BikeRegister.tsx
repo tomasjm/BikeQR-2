@@ -1,41 +1,38 @@
-import React, { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useRouter } from "expo-router";
+import React, { useState, useEffect } from "react";
+import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { api } from "~/utils/api";
 
 const BikeRegister = () => {
-  const [userId, setUserId] = useState("");
+  const router = useRouter();
 
   const [description, setDescription] = useState("");
-  const registerBike = api.bike.createByUserId.useMutation();
-
-  const handleUserIdChange = (text: string) => {
-    setUserId(text);
-  };
+  const registerBike = api.bike.createUserBike.useMutation();
 
   const handleDescriptionChange = (text: string) => {
     setDescription(text);
   };
 
   const handleSubmit = () => {
-    registerBike.mutate({ userId, description });
-    if (registerBike.isSuccess) {
-      setDescription("");
-      setUserId("");
-      console.log("XD");
-    }
+    registerBike.mutate({ description });
   };
+
+  useEffect(() => {
+    if (registerBike.isSuccess) {
+      alert("Bicicleta agregada!")
+      router.back()
+    }
+  }, [registerBike.isSuccess])
+
+  if (registerBike.isError) {
+    alert("Ha ocurrido un error!")
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="mx-4 space-y-2 pb-2">
-        <TextInput
-          placeholder="User ID"
-          value={userId}
-          onChangeText={handleUserIdChange}
-          className="rounded-md border p-3"
-        />
         <TextInput
           placeholder="Description"
           value={description}
@@ -44,12 +41,17 @@ const BikeRegister = () => {
         />
       </View>
       <View className="mx-4 items-center">
-        <TouchableOpacity
-          className="bg-yellow-000-color rounded-md border p-2 px-4"
-          onPress={() => handleSubmit()}
-        >
-          <Text>Submit</Text>
-        </TouchableOpacity>
+        {registerBike.isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <TouchableOpacity
+            className="bg-yellow-000-color rounded-md border p-2 px-4"
+            onPress={() => handleSubmit()}
+          >
+            <Text>Submit</Text>
+          </TouchableOpacity>
+
+        )}
       </View>
     </SafeAreaView>
   );
