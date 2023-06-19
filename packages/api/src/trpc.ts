@@ -12,7 +12,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 import { verify } from "@acme/jwt";
 // import { getServerSession, type Session } from "@acme/auth";
-import { prisma } from "@acme/db";
+import { Role, prisma } from "@acme/db";
 
 /**
  * 1. CONTEXT
@@ -118,17 +118,44 @@ export const publicProcedure = t.procedure;
  * Reusable middleware that enforces users are logged in before running the
  * procedure
  */
-const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
+const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
   if (!ctx.userId) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  const user = await ctx.prisma.user.findUnique({
+    where: {
+      id: ctx.userId
+    }
+  })
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      userId: ctx.userId,
+      role: user?.role
+    },
+  });
+});
+const enforceUserIsAttendant = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.userId) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  const user = await ctx.prisma.user.findUnique({
+    where: {
+      id: ctx.userId
+    }
+  })
+  if (user?.role !== Role.ATTENDANT) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
     ctx: {
       // infers the `session` as non-nullable
       userId: ctx.userId,
+      role: Role.ATTENDANT
     },
   });
 });
+
 
 /**
  * Protected (authed) procedure
@@ -140,3 +167,4 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const attendantProcedure = t.procedure.use(enforceUserIsAttendant);

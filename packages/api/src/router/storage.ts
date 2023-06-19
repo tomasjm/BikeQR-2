@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { sign, verify } from "@acme/jwt"
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { attendantProcedure, createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { Status } from "@acme/db";
 
 export const storageRouter = createTRPCRouter({
@@ -38,8 +38,9 @@ export const storageRouter = createTRPCRouter({
       }
     })
   }),
-  startStorageProcess: publicProcedure.input(z.object({ attendantId: z.string(), userId: z.string(), bikeId: z.string() })).mutation(async ({ ctx, input }) => {
-    const { userId, attendantId, bikeId } = input;
+  startStorageProcess: attendantProcedure.input(z.object({ userId: z.string(), bikeId: z.string() })).mutation(async ({ ctx, input }) => {
+    const { userId, bikeId } = input;
+    const attendantId = ctx.userId;
     const payload = { userId, attendantId, bikeId };
     const token = sign(payload, "123")
     await ctx.prisma.storage.updateMany({
@@ -76,7 +77,7 @@ export const storageRouter = createTRPCRouter({
       }
     })
   }),
-  finishStorageProcess: publicProcedure.input(z.object({ token: z.string(), bikeCode: z.string().length(10) })).mutation(async ({ ctx, input }) => {
+  finishStorageProcess: protectedProcedure.input(z.object({ token: z.string(), bikeCode: z.string().length(10) })).mutation(async ({ ctx, input }) => {
     const { token, bikeCode } = input;
     let payload;
     try {

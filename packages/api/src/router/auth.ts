@@ -65,5 +65,14 @@ export const authRouter = createTRPCRouter({
       error: false,
       userId
     }
+  }),
+  getSession: protectedProcedure.query(({ ctx }) => {
+    return {
+      error: false,
+      user: {
+        id: ctx.userId,
+        role: ctx.role
+      }
+    }
   })
 });
