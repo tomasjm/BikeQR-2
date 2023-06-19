@@ -13,7 +13,7 @@ function HomePageList({ role }: { role: string }) {
     {
       id: 2,
       title: "Ingreso de Bicicletas",
-      screen: "/home/Storage",
+      screen: "/StartStorage",
       role: "ATTENDANT",
       image: require("../images/parkingBike.jpg"),
     },
