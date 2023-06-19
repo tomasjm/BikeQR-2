@@ -13,7 +13,7 @@ function HomePageList({ role }: { role: string }) {
     {
       id: 2,
       title: "Ingreso de Bicicletas",
-      screen: "/FinishStorage",
+      screen: "/StartStorage",
       role: "ATTENDANT",
       image: require("../images/parkingBike.jpg"),
     },
@@ -23,6 +23,12 @@ function HomePageList({ role }: { role: string }) {
       screen: "/home/Status",
       image: require("../images/21936.jpg"),
     },
+    {
+      id: 4,
+      title: "Retiro de Bicicletas",
+      screen: "/FinishStorage",
+      image: require("../images/parkingBike.jpg"),
+    },
   ];
   return (
     <FlatList
@@ -30,17 +36,16 @@ function HomePageList({ role }: { role: string }) {
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => {
         if ((item.role && role === "ATTENDANT") || !item.role) {
-          return <HomeButton item={item} />
+          return <HomeButton item={item} />;
         }
-        return <></>
+        return <></>;
       }}
     />
   );
 }
 
-
 const HomeButton = ({ item }: { item: any }) => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <TouchableOpacity
       className="bg-white p-4"
@@ -48,20 +53,17 @@ const HomeButton = ({ item }: { item: any }) => {
     >
       <View
         key={item.id}
-        className="flex-row items-end space-x-4 rounded-md border border-gray-200 bg-white p-1 px-8 shadow-sm shadow-gray"
+        className="shadow-gray flex-row items-end space-x-4 rounded-md border border-gray-200 bg-white p-1 px-8 shadow-sm"
       >
         <Image
           className="h-40 w-40"
           style={{ resizeMode: "contain" }}
           source={item.image}
         />
-        <Text className="justify-center text-base font-bold">
-          {item.title}
-        </Text>
+        <Text className="justify-center text-base font-bold">{item.title}</Text>
       </View>
     </TouchableOpacity>
-
   );
-}
+};
 
 export default HomePageList;
