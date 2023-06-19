@@ -21,7 +21,7 @@ export default function UserRegister() {
   } = useForm<UserRegisterProps>();
   const userRegisterMutation = api.auth.register.useMutation();
   const onSubmit = (data: UserRegisterProps) => {
-    const email = data.email;
+    const email = data.email.toLowerCase();
     const password = data.password;
     userRegisterMutation.mutate({ email, password });
   };
@@ -90,6 +90,8 @@ export default function UserRegister() {
                       style={{ width: 30, height: 30 }}
                     />
                     <TextInput
+                      autoCapitalize="none"
+                      secureTextEntry={true}
                       className="flex-1 rounded-md border p-3"
                       placeholder="Contraseña"
                       onChangeText={onChange}
