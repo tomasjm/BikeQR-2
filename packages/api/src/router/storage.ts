@@ -2,6 +2,7 @@ import { z } from "zod";
 import { sign, verify } from "@acme/jwt"
 import { attendantProcedure, createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { Status } from "@acme/db";
+import { appRouter } from "../root";
 
 export const storageRouter = createTRPCRouter({
   // Retorna el registro de storage asociado al token
@@ -39,6 +40,7 @@ export const storageRouter = createTRPCRouter({
     })
   }),
   startStorageProcess: attendantProcedure.input(z.object({ userId: z.string(), bikeId: z.string() })).mutation(async ({ ctx, input }) => {
+    const caller = appRouter.createCaller({ ...ctx });
     const { userId, bikeId } = input;
     const attendantId = ctx.userId;
     const payload = { userId, attendantId, bikeId };
@@ -49,7 +51,7 @@ export const storageRouter = createTRPCRouter({
         status: Status.CANCELED
       }
     })
-    return ctx.prisma.storage.create({
+    const storage = await ctx.prisma.storage.create({
       data: {
         user: {
           connect: {
@@ -76,6 +78,18 @@ export const storageRouter = createTRPCRouter({
         token: true
       }
     })
+    if (storage) {
+      caller.notifications.sendNotification({ toUserId: userId, title: "Se ha iniciado proceso de almacenamiento", body: "Se ha iniciado el proceso de almacenamiento", data: { type: "START_STORAGE" } })
+      return {
+        error: false,
+        storage
+      }
+    } else {
+      return {
+        error: true,
+        msg: "No se ha podido inicializar el proceso de almacenamiento"
+      }
+    }
   }),
   finishStorageProcess: protectedProcedure.input(z.object({ token: z.string(), bikeCode: z.string().length(10) })).mutation(async ({ ctx, input }) => {
     const { token, bikeCode } = input;
