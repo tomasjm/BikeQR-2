@@ -2,14 +2,18 @@ import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 import Scanner from "~/components/Scanner";
 import useScanner, { ScannerHook } from "~/hooks/useScanner";
 
 function ScannerBarCode() {
+  const router = useRouter()
+  const { backPath } = useLocalSearchParams();
+
   const {
     scanned,
+    type,
     hasPermission,
     setHasPermission,
     setScanned,
@@ -17,7 +21,7 @@ function ScannerBarCode() {
     error,
     data,
   } = useScanner({
-    type: BarCodeScanner.Constants.BarCodeType.code128,
+    type: [BarCodeScanner.Constants.BarCodeType.code128, BarCodeScanner.Constants.BarCodeType.qr],
   });
   const scannerProps: ScannerHook = {
     scanned,
@@ -27,13 +31,12 @@ function ScannerBarCode() {
     handleBarCodeScanned,
   };
 
-  const router = useRouter();
 
   useEffect(() => {
     if (data) {
       router.replace({
-        pathname: "/home/Storage",
-        params: { data },
+        pathname: backPath as string,
+        params: { data, type },
       });
     }
   }, [data]);

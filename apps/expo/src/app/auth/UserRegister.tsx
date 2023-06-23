@@ -43,7 +43,7 @@ export default function UserRegister() {
         <View className="-mb-10 -mt-10 items-center">
           <Image
             style={{ resizeMode: "cover", width: 380, height: 380 }}
-            source={require("../../images/BikeQRVectorLogo.png")}
+            source={require("../../resources/BikeQRVectorLogo.png")}
           />
         </View>
         <View className="space-y-5">
@@ -55,7 +55,7 @@ export default function UserRegister() {
               <Controller
                 control={control}
                 rules={{ required: true }}
-                render={({ field: { onChange, onBlur, value } }) => (
+                render={({ field: { onChange, value } }) => (
                   <View className="flex-row items-center space-x-2">
                     <FontAwesome
                       name="user"
