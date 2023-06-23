@@ -1,12 +1,12 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Tabs } from "expo-router";
-import {
-  FontAwesome,
-  MaterialCommunityIcons,
-  Octicons,
-} from "@expo/vector-icons";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+
+import { api } from "~/utils/api";
 
 export default () => {
+  // const { data } = api.auth.getSession.useQuery();
+
   return (
     <SafeAreaProvider>
       <Tabs
@@ -28,7 +28,7 @@ export default () => {
         }}
       >
         <Tabs.Screen
-          name="HomePage"
+          name="HomePageView"
           options={{
             title: "Inicio",
             tabBarIcon: ({ color }) => (
@@ -36,30 +36,22 @@ export default () => {
             ),
           }}
         />
+
         <Tabs.Screen
-          name="Register"
+          name="HelpView"
           options={{
-            title: "Registro",
-            tabBarIcon: ({ color }) => (
-              <Octicons name="person-add" size={24} color={color} />
+            title: "Ayuda",
+            tabBarIcon: () => (
+              <MaterialIcons name="help-center" size={24} color="white" />
             ),
           }}
         />
         <Tabs.Screen
-          name="Storage"
+          name="AccountView"
           options={{
-            title: "Ingreso",
-            tabBarIcon: ({ color }) => (
-              <Octicons name="diff-added" size={24} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="Status"
-          options={{
-            title: "Estado",
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="bike" size={24} color={color} />
+            title: "Cuenta",
+            tabBarIcon: () => (
+              <MaterialIcons name="account-circle" size={24} color="white" />
             ),
           }}
         />

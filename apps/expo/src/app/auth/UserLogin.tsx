@@ -3,8 +3,8 @@ import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { FontAwesome, Foundation } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Controller, useForm } from "react-hook-form";
-import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { api, setToken } from "~/utils/api";
 import { UserRegisterProps } from "./UserRegister";
@@ -13,8 +13,6 @@ export default function UserLogin() {
   const {
     handleSubmit,
     control,
-    formState,
-    reset,
     formState: { errors },
   } = useForm<UserRegisterProps>();
   const router = useRouter();
@@ -28,11 +26,11 @@ export default function UserLogin() {
   useEffect(() => {
     const storeData = async (token: string) => {
       try {
-        await AsyncStorage.setItem('@token', token)
+        await AsyncStorage.setItem("@token", token);
       } catch (e) {
-        alert("error " + e)
+        alert("error " + e);
       }
-    }
+    };
     if (userLoginMutation.isSuccess && !userLoginMutation.data?.error) {
       const token = userLoginMutation.data?.token;
       setToken(token as string);
@@ -48,7 +46,7 @@ export default function UserLogin() {
         <View className="-mb-10 -mt-10 items-center">
           <Image
             style={{ resizeMode: "cover", width: 380, height: 380 }}
-            source={require("../../images/BikeQRVectorLogo.png")}
+            source={require("../../resources/BikeQRVectorLogo.png")}
           />
         </View>
         <View className="space-y-5">

@@ -45,10 +45,6 @@ const RootLayout = () => {
             }}
           />
           <Stack.Screen name="home" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="BikeRegister"
-            options={{ title: "Registro de Bicicletas" }}
-          />
           <Stack.Screen name="ScannerBarCode" options={{ title: "Escáner" }} />
           <Stack.Screen
             name="UserBikeList"
