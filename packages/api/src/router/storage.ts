@@ -3,6 +3,15 @@ import { sign, verify } from "@acme/jwt"
 import { attendantProcedure, createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { Status } from "@acme/db";
 import { appRouter } from "../root";
+import Pusher from "pusher";
+
+
+const pusher = new Pusher({
+  appId: "1624027",
+  key: "68a92baa7c1b8cdaed4f",
+  secret: "4a0936ce7115422a4bd6",
+  cluster: "us2"
+})
 
 export const storageRouter = createTRPCRouter({
   // Retorna el registro de storage asociado al token
@@ -51,6 +60,15 @@ export const storageRouter = createTRPCRouter({
         status: Status.CANCELED
       }
     })
+    const records = await ctx.prisma.storage.findMany({
+      where: { bikeId, status: Status.STORED }
+    });
+    if (records.length != 0) {
+      return {
+        error: true,
+        msg: "Ya existe un proceso de almacenamiento en curso, por favor, guardar bicicleta o iniciar retiro."
+      }
+    }
     const storage = await ctx.prisma.storage.create({
       data: {
         user: {
@@ -167,15 +185,45 @@ export const storageRouter = createTRPCRouter({
       msg: "El token no se encuentra asociada a esta bicicleta"
     }
   }),
-  confirmStorage: publicProcedure.input(z.object({ storageId: z.string() })).mutation(({ ctx, input }) => {
-    const { storageId } = input;
-    return ctx.prisma.storage.update({
+  confirmStorage: publicProcedure.input(z.object({ token: z.string() })).mutation(async ({ ctx, input }) => {
+    const { token } = input;
+
+    const records = await ctx.prisma.storage.updateMany({
       where: {
-        id: storageId
+        token: {
+          token
+        }
       },
       data: {
         status: Status.STORED
       }
     })
+    if (records.count == 1) {
+      const records = await ctx.prisma.storage.findMany({
+        where: {
+          token: {
+            token
+          }
+        }
+      })
+      if (records.length == 1) {
+        pusher.trigger(records[0]!.id, "START_STORAGE", {
+          message: true
+        })
+        return {
+          error: false
+        }
+      } else {
+        return {
+          error: true,
+          msg: "No se ha encontrado el registro actualizado"
+        }
+      }
+    } else {
+      return {
+        error: true,
+        msg: "Hubo un error interno en el servidor"
+      }
+    }
   }),
 });
