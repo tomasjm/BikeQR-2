@@ -59,6 +59,20 @@ export const authRouter = createTRPCRouter({
       msg: "Datos ingresados no corresponden a un usuario"
     }
   }),
+  logout: protectedProcedure.mutation(async ({ ctx }) => {
+    const { userId } = ctx;
+    await ctx.prisma.user.updateMany({
+      where: {
+        id: userId
+      },
+      data: {
+        expoPushToken: ""
+      },
+    })
+    return {
+      error: false
+    }
+  }),
   checkSession: protectedProcedure.mutation(({ ctx }) => {
     const { userId } = ctx;
     return {
