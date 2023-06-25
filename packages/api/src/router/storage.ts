@@ -164,18 +164,12 @@ export const storageRouter = createTRPCRouter({
             msg: "El token está vinculado a un proceso de almacenamiento que no se ha confirmado"
           }
         }
-        await ctx.prisma.storage.update({
-          where: {
-            id: storage.id
-          },
-          data: {
-            status: Status.COMPLETED
-          }
+        caller.notifications.sendNotification({
+          toUserId: userId, title: "Se ha retirado la bicicleta", body: "Se ha retirado la bicicleta",
+          data: { type: "FINISH_STORAGE", data: { bike, token } }
         })
-        caller.notifications.sendNotification({ toUserId: userId, title: "Se ha retirado la bicicleta", body: "Se ha retirado la bicicleta", data: { type: "FINISH_STORAGE" } })
-
         return {
-          msg: "Se ha completado el proceso de retiro éxitosamente",
+          msg: "Se ha iniciado el proceso de retiro éxitosamente",
           error: false
         }
       }
@@ -184,6 +178,48 @@ export const storageRouter = createTRPCRouter({
       error: true,
       msg: "El token no se encuentra asociada a esta bicicleta"
     }
+  }),
+  confirmFinishStorage: publicProcedure.input(z.object({ token: z.string() })).mutation(async ({ ctx, input }) => {
+    const { token } = input;
+
+    const records = await ctx.prisma.storage.updateMany({
+      where: {
+        token: {
+          token
+        }
+      },
+      data: {
+        status: Status.COMPLETED
+      }
+    })
+    if (records.count == 1) {
+      const records = await ctx.prisma.storage.findMany({
+        where: {
+          token: {
+            token
+          }
+        }
+      })
+      if (records.length == 1) {
+        pusher.trigger(records[0]!.id, "FINISH_STORAGE", {
+          message: true
+        })
+        return {
+          error: false
+        }
+      } else {
+        return {
+          error: true,
+          msg: "No se ha encontrado el registro actualizado"
+        }
+      }
+    } else {
+      return {
+        error: true,
+        msg: "Hubo un error interno en el servidor"
+      }
+    }
+
   }),
   confirmStorage: publicProcedure.input(z.object({ token: z.string() })).mutation(async ({ ctx, input }) => {
     const { token } = input;

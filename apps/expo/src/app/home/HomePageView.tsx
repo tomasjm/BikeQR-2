@@ -31,8 +31,8 @@ const HomePageView = () => {
 
   useEffect(() => {
     if (notification) {
-      router.push({ pathname: "FinishTest", params: { data: notification.request.content.data } })
-      console.log(notification.request.content)
+      const { data } = notification.request.content.data
+      router.push({ pathname: "FinishTest", params: { token: data.token, code: data.bike.code, description: data.bike.description } })
     }
   }, [notification]);
 
