@@ -2,29 +2,35 @@ import React, { useEffect } from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { api } from "~/utils/api";
 import Button from "~/components/Button";
 
 export default function StoreBike() {
   const router = useRouter();
-  const { data, type } = useLocalSearchParams();
+  const { data: dataQR, type } = useLocalSearchParams();
   const confirmStorage = api.storage.confirmStorage.useMutation();
 
   useEffect(() => {
     type == BarCodeScanner.Constants.BarCodeType.qr &&
-      confirmStorage.mutate({ token: data as string });
+      confirmStorage.mutate({ token: dataQR as string });
     type == BarCodeScanner.Constants.BarCodeType.code128 &&
       alert("El código escaneado no es un código QR");
-  }, [data]);
+  }, [dataQR]);
 
   useEffect(() => {
     if (confirmStorage.isSuccess) {
-      alert("Se guardó exitosamente la bicicleta.");
-      if (Array.isArray(confirmStorage.data)) {
-        const bike = confirmStorage.data[0];
-        console.log("Your bike has been stored, this one is your bike:", bike);
-      }
+      const data = confirmStorage.data;
+      const bikeId = data.data?.bike.code;
+      const storeQr = async (token: string, codeBike: string) => {
+        try {
+          await AsyncStorage.setItem(`@${codeBike}`, token);
+        } catch (e) {
+          alert("error " + e);
+        }
+      };
+      storeQr(dataQR as string, bikeId as string);
     }
     confirmStorage.isError && alert("Error al confirmar el guardado");
   }, [confirmStorage.isSuccess]);

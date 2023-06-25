@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Pusher from "pusher-js"
+import Pusher from "pusher-js";
 
 interface PusherHook {
   channel: string | undefined;
@@ -7,40 +7,38 @@ interface PusherHook {
 }
 
 const pusher = new Pusher("68a92baa7c1b8cdaed4f", {
-  cluster: "us2"
-})
+  cluster: "us2",
+});
 
 const usePusher = ({ channel, event }: PusherHook) => {
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>();
   const [start, setStart] = useState<boolean>(false);
   const subscribe = () => {
-    setStart(true)
-  }
+    setStart(true);
+  };
   useEffect(() => {
     if (!start) return;
-    console.log("subscribe to", channel, event)
+    console.log("subscribe to", channel, event);
     const channelHandler = pusher.subscribe(channel as string);
-    channelHandler.bind(event, (data: { message: string }) => {
-      console.log("data from", channel, event, ":", data)
+    channelHandler.bind(event, (data: { message: boolean }) => {
+      console.log("data from", channel, event, ":", data);
       if (data.message) {
-        setIsSuccess(true)
+        setIsSuccess(true);
         return () => {
-          console.log("unsubscribe from", channel, event)
-          pusher.unsubscribe(channel as string)
+          console.log("unsubscribe from", channel, event);
+          pusher.unsubscribe(channel as string);
         };
       }
       if (!data.message) {
-        setIsSuccess(false)
+        setIsSuccess(false);
       }
-
     });
     return () => {
-      console.log("unsubscribe from", channel, event)
-      pusher.unsubscribe(channel as string)
+      console.log("unsubscribe from", channel, event);
+      pusher.unsubscribe(channel as string);
     };
-  }, [channel, start])
+  }, [channel, start]);
 
-
-  return { isSuccess, subscribe }
-}
+  return { isSuccess, subscribe };
+};
 export default usePusher;

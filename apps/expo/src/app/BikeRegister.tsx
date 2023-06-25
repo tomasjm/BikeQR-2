@@ -40,6 +40,10 @@ const BikeRegister = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="mx-4 space-y-2 pb-2">
+        <Text className="p-4 text-center text-base italic">
+          Por favor, para confirmar el guardado escanee el código QR en la
+          pantalla del encargado
+        </Text>
         <TextInput
           placeholder="Description"
           value={description}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   SafeAreaView,
@@ -13,12 +13,18 @@ import { useAtom } from "jotai";
 import { api } from "~/utils/api";
 import Button from "~/components/Button";
 import { bikeAtom } from "~/atoms";
+import usePusher from "~/hooks/usePusher";
 
 const Index = () => {
   const router = useRouter();
   const [bike, setBike] = useAtom(bikeAtom);
   const { data, type } = useLocalSearchParams();
+  const [storageId, setStorageId] = useState<string>("");
 
+  const { isSuccess, subscribe } = usePusher({
+    channel: storageId,
+    event: "FINISH_STORAGE",
+  });
   const finishStorageMutation = api.storage.finishStorageProcess.useMutation();
 
   useEffect(() => {
@@ -36,9 +42,27 @@ const Index = () => {
 
   useEffect(() => {
     if (finishStorageMutation.isSuccess) {
-      alert("se ha finalizado");
+      alert("se ha iniciado el proceso de finalización de retiro");
+      const data = finishStorageMutation.data;
+      if (data.error) {
+        return alert(`Error!: ${data.msg}`);
+      }
+      const storage = data.data?.storage;
+      setStorageId(storage?.id as string);
     }
   }, [finishStorageMutation.isSuccess]);
+
+  useEffect(() => {
+    if (storageId.length > 0) {
+      subscribe();
+    }
+  }, [storageId]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      alert("Se completó el proceso de retiro exitosamente");
+    }
+  }, [isSuccess]);
 
   return (
     <SafeAreaView className="flex-1 gap-10 bg-white p-4">
