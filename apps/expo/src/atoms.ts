@@ -1,9 +1,9 @@
-
-import { atom } from "jotai"
 import { BarCodeScannerResult } from "expo-barcode-scanner";
+import { atom } from "jotai";
+
 export interface ScannedData {
   data: string;
-  type: BarCodeScannerResult["type"]
+  type: BarCodeScannerResult["type"];
 }
 export type UserRole = "USER" | "ATTENDANT";
 

@@ -15,7 +15,16 @@ export { type RouterInputs, type RouterOutputs } from "@acme/api";
 export let token: string = "a";
 export const setToken = (newToken: string) => {
   token = newToken;
-}
+};
+export const validatePermissionUser = (role: string) => {
+  return role === "USER";
+};
+export const validatePermissionAdmin = (role: string) => {
+  return role === "ATTENDANT";
+};
+export const validateUserRole = (role: string) => {
+  return api.auth.getSession.useQuery().data?.user?.role === role;
+};
 
 /**
  * Extend this function when going to production by
@@ -61,9 +70,9 @@ export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
           url: `${getBaseUrl()}/api/trpc`,
           headers() {
             return {
-              Authorization: `Bearer ${token}`
-            }
-          }
+              Authorization: `Bearer ${token}`,
+            };
+          },
         }),
       ],
     }),

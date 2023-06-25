@@ -17,31 +17,54 @@ const RootLayout = () => {
         <Stack
           screenOptions={{
             headerStyle: {
-              backgroundColor: "#FFFFFF",
+              backgroundColor: "#FFD23A",
             },
             headerTintColor: "#000",
             headerTitleStyle: {
               fontWeight: "bold",
             },
-            headerTitleAlign: "center",
           }}
         >
           <Stack.Screen
             name="index"
-            options={{ title: "Inicio", headerShown: false }}
+            options={{
+              title: "Inicio",
+            }}
+          />
+          <Stack.Screen
+            name="StartStorage"
+            options={{
+              title: "Ingreso",
+            }}
+          />
+          <Stack.Screen
+            name="StoreBike"
+            options={{
+              title: "Ingreso",
+            }}
+          />
+          <Stack.Screen
+            name="BikeRegister"
+            options={{
+              title: "Registro",
+            }}
+          />
+          <Stack.Screen
+            name="FinishStorage"
+            options={{
+              title: "Retiro",
+            }}
           />
           <Stack.Screen
             name="auth/UserRegister"
             options={{
               title: "BIKEQR",
-              headerStyle: { backgroundColor: "#FFD23A" },
             }}
           />
           <Stack.Screen
             name="auth/UserLogin"
             options={{
               title: "BIKEQR",
-              headerStyle: { backgroundColor: "#FFD23A" },
             }}
           />
           <Stack.Screen name="home" options={{ headerShown: false }} />

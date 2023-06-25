@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import usePusher from "~/hooks/usePusher";
 
 import { api } from "~/utils/api";
+import Button from "~/components/Button";
+import usePusher from "~/hooks/usePusher";
 
 const StartStorage = () => {
   const router = useRouter();
@@ -15,20 +16,21 @@ const StartStorage = () => {
   const validateCodeMutation = api.bike.validateCode.useMutation();
   const startStorageProcess = api.storage.startStorageProcess.useMutation();
 
-  const { isSuccess, subscribe } = usePusher({ channel: storageId, event: "START_STORAGE" });
-
+  const { isSuccess, subscribe } = usePusher({
+    channel: storageId,
+    event: "START_STORAGE",
+  });
   useEffect(() => {
     if (isSuccess) {
-      alert("se completó el storage")
+      alert("se completó el storage");
     }
-
-  }, [isSuccess])
+  }, [isSuccess]);
 
   useEffect(() => {
     if (qr) {
-      subscribe()
+      subscribe();
     }
-  }, [qr])
+  }, [qr]);
 
   useEffect(() => {
     if (type == BarCodeScanner.Constants.BarCodeType.code128) {
@@ -52,35 +54,38 @@ const StartStorage = () => {
     if (startStorageProcess.isSuccess) {
       const data = startStorageProcess.data;
       if (data.error) {
-        return alert(`Error!: ${data.msg}`)
+        return alert(`Error!: ${data.msg}`);
       }
       const storage = startStorageProcess.data.storage;
-      setStorageId(storage?.id as string)
+      setStorageId(storage?.id as string);
       setQR(storage?.token.token as string);
     }
   }, [startStorageProcess.isSuccess]);
 
   return (
-    <SafeAreaView className="flex-1 items-center gap-10 bg-white p-4">
-      <Text className="text-2xl">Ingresar bicicleta</Text>
-      <TouchableOpacity
-        className="bg-yellow-000-color items-center rounded-md border p-4 text-base text-white"
-        onPress={() =>
-          router.push({
-            pathname: "ScannerBarCode",
-            params: { backPath: "StartStorage" },
-          })
-        }
-      >
-        <Text>Ingresar bicicleta</Text>
-      </TouchableOpacity>
-      {validateCodeMutation.isLoading && <Text>Validando código...</Text>}
-      {startStorageProcess.isLoading && <Text>Generando QR...</Text>}
-      {qr && (
-        <View className="p-10">
-          <QRCode size={350} logoSize={60} value={qr} />
-        </View>
-      )}
+    <SafeAreaView className="flex-1 items-center gap-10 bg-white">
+      <View className="flex-1 items-center">
+        <Text className="p-8 text-base italic">
+          Por favor, escanee el código de barra de la bicicleta.
+        </Text>
+        <Button
+          text="Escanear"
+          onPress={() =>
+            router.push({
+              pathname: "ScannerBarCode",
+              params: { backPath: "StartStorage" },
+            })
+          }
+        />
+
+        {validateCodeMutation.isLoading && <Text>Validando código...</Text>}
+        {startStorageProcess.isLoading && <Text>Generando QR...</Text>}
+        {qr && (
+          <View className="p-10">
+            <QRCode size={350} logoSize={60} value={qr} />
+          </View>
+        )}
+      </View>
     </SafeAreaView>
   );
 };

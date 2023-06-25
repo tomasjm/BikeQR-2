@@ -8,7 +8,7 @@ import Scanner from "~/components/Scanner";
 import useScanner, { ScannerHook } from "~/hooks/useScanner";
 
 function ScannerBarCode() {
-  const router = useRouter()
+  const router = useRouter();
   const { backPath } = useLocalSearchParams();
 
   const {
@@ -21,7 +21,10 @@ function ScannerBarCode() {
     error,
     data,
   } = useScanner({
-    type: [BarCodeScanner.Constants.BarCodeType.code128, BarCodeScanner.Constants.BarCodeType.qr],
+    type: [
+      BarCodeScanner.Constants.BarCodeType.code128,
+      BarCodeScanner.Constants.BarCodeType.qr,
+    ],
   });
   const scannerProps: ScannerHook = {
     scanned,
@@ -31,10 +34,9 @@ function ScannerBarCode() {
     handleBarCodeScanned,
   };
 
-
   useEffect(() => {
     if (data) {
-      router.replace({
+      router.push({
         pathname: backPath as string,
         params: { data, type },
       });

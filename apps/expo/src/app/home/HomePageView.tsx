@@ -3,10 +3,11 @@ import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { api } from "~/utils/api";
-import HomePageViewList from "~/components/HomePageList";
+import HomeList from "~/components/HomeList";
+import { UserRole } from "~/atoms";
 import useNotifications from "~/hooks/useNotifications";
 import useRole from "~/hooks/useRole";
-import { UserRole } from "~/atoms";
+import { mockData } from "../mocks/mockData";
 
 const HomePageView = () => {
   const { data, isSuccess } = api.auth.getSession.useQuery();
@@ -14,12 +15,12 @@ const HomePageView = () => {
   const setupNotificationMutation =
     api.notifications.saveExpoPushToken.useMutation();
 
-  const { setRole } = useRole()
+  const { setRole } = useRole();
   useEffect(() => {
     if (isSuccess) {
-      setRole(data?.user.role as UserRole)
+      setRole(data?.user.role as UserRole);
     }
-  }, [isSuccess])
+  }, [isSuccess]);
 
   useEffect(() => {
     console.log("pidiendo permisos");
@@ -48,7 +49,7 @@ const HomePageView = () => {
     <SafeAreaView className="flex-1 items-center bg-white">
       <Text className="text-2xl font-bold">Bienvenido a BikeQR</Text>
       <View className="flex-1">
-        <HomePageViewList />
+        <HomeList data={mockData} />
       </View>
     </SafeAreaView>
   );

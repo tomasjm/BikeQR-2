@@ -1,9 +1,16 @@
-import { useRouter } from "expo-router";
-import React, { useState, useEffect } from "react";
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 import { api } from "~/utils/api";
+import Button from "~/components/Button";
 
 const BikeRegister = () => {
   const router = useRouter();
@@ -21,13 +28,13 @@ const BikeRegister = () => {
 
   useEffect(() => {
     if (registerBike.isSuccess) {
-      alert("Bicicleta agregada!")
-      router.back()
+      alert("Bicicleta agregada!");
+      router.back();
     }
-  }, [registerBike.isSuccess])
+  }, [registerBike.isSuccess]);
 
   if (registerBike.isError) {
-    alert("Ha ocurrido un error!")
+    alert("Ha ocurrido un error!");
   }
 
   return (
@@ -44,13 +51,7 @@ const BikeRegister = () => {
         {registerBike.isLoading ? (
           <ActivityIndicator />
         ) : (
-          <TouchableOpacity
-            className="bg-yellow-000-color rounded-md border p-2 px-4"
-            onPress={() => handleSubmit()}
-          >
-            <Text>Submit</Text>
-          </TouchableOpacity>
-
+          <Button text="Registrar" onPress={() => handleSubmit()} />
         )}
       </View>
     </SafeAreaView>
