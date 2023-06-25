@@ -1,11 +1,11 @@
+import { TouchableOpacity } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-
-import { api } from "~/utils/api";
 
 export default () => {
   // const { data } = api.auth.getSession.useQuery();
+  const router = useRouter()
 
   return (
     <SafeAreaProvider>
@@ -31,6 +31,16 @@ export default () => {
           name="HomePageView"
           options={{
             title: "Inicio",
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  router.push("./AccountView");
+                }}
+                className="flex-col items-end -space-y-4 pr-4 opacity-40"
+              >
+                <MaterialIcons name="account-circle" size={38} color="black" />
+              </TouchableOpacity>
+            ),
             tabBarIcon: ({ color }) => (
               <FontAwesome name="home" size={24} color={color}></FontAwesome>
             ),
