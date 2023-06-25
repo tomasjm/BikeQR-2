@@ -65,7 +65,7 @@ const StartStorage = () => {
   return (
     <SafeAreaView className="flex-1 items-center gap-10 bg-white">
       <View className="flex-1 items-center">
-        <Text className="p-8 text-base italic">
+        <Text className="p-8 px-3 text-base italic">
           Por favor, escanee el código de barra de la bicicleta.
         </Text>
         <Button
@@ -82,7 +82,12 @@ const StartStorage = () => {
         {startStorageProcess.isLoading && <Text>Generando QR...</Text>}
         {qr && (
           <View className="p-10">
-            <QRCode size={350} logoSize={60} value={qr} />
+            <View className="rounded-sm border p-3">
+              <QRCode size={350} logoSize={60} value={qr} />
+            </View>
+            <Text className="items-center justify-center p-2 py-10 text-center text-base">
+              Permita al usuario escanear el código QR mostrado en pantalla
+            </Text>
           </View>
         )}
       </View>

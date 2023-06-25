@@ -36,7 +36,7 @@ export const notificationsRouter = createTRPCRouter({
       msg: "No se ha podido guardar el token, intenta nuevamente"
     }
   }),
-  sendNotification: protectedProcedure.input(z.object({ toUserId: z.string(), title: z.string(), body: z.string(), data: z.object({ type: z.string() }).partial() })).mutation(async ({ ctx, input }) => {
+  sendNotification: protectedProcedure.input(z.object({ toUserId: z.string(), title: z.string(), body: z.string(), data: z.object({ type: z.string(), data: z.record(z.any()) }).partial() })).mutation(async ({ ctx, input }) => {
     const { userId: fromUserId } = ctx;
     const { toUserId, title, body, data } = input;
     const toUser = await ctx.prisma.user.findUnique({

@@ -31,14 +31,7 @@ function useScanner({ type: expectedType }: UseScannerProps) {
     } else {
       setError(true);
     }
-    console.log(
-      "data->",
-      data,
-      "type->",
-      scannedType,
-      "expected->",
-      expectedType,
-    );
+   
   };
 
   return {

@@ -19,8 +19,13 @@ export default function StoreBike() {
   }, [data]);
 
   useEffect(() => {
-    confirmStorage.isSuccess &&
-      (alert("Se guardó exitosamente la bicicleta."), router.push("home"));
+    if (confirmStorage.isSuccess) {
+      alert("Se guardó exitosamente la bicicleta.");
+      if (Array.isArray(confirmStorage.data)) {
+        const bike = confirmStorage.data[0];
+        console.log("Your bike has been stored, this one is your bike:", bike);
+      }
+    }
     confirmStorage.isError && alert("Error al confirmar el guardado");
   }, [confirmStorage.isSuccess]);
 

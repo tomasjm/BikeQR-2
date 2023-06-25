@@ -4,19 +4,19 @@ import {
   SafeAreaView,
   Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useAtom } from "jotai";
 
 import { api } from "~/utils/api";
-import { bikeAtom, scannedDataAtom, type ScannedData } from "~/atoms";
+import Button from "~/components/Button";
+import { bikeAtom } from "~/atoms";
 
 const Index = () => {
   const router = useRouter();
   const [bike, setBike] = useAtom(bikeAtom);
-  const [scannedData, setScannedData] = useAtom(scannedDataAtom);
-
   const { data, type } = useLocalSearchParams();
 
   const finishStorageMutation = api.storage.finishStorageProcess.useMutation();
@@ -24,7 +24,6 @@ const Index = () => {
   useEffect(() => {
     if (type == BarCodeScanner.Constants.BarCodeType.qr) {
       console.log("finish");
-      setScannedData({ data, type } as ScannedData);
       const token = data as string;
       const bikeCode = bike;
       finishStorageMutation.mutate({ token, bikeCode });
@@ -32,7 +31,6 @@ const Index = () => {
     if (type == BarCodeScanner.Constants.BarCodeType.code128) {
       console.log("se ha leido bicicleta", data);
       setBike(data as string);
-      setScannedData({ data, type } as ScannedData);
     }
   }, [type]);
 
@@ -43,9 +41,9 @@ const Index = () => {
   }, [finishStorageMutation.isSuccess]);
 
   return (
-    <SafeAreaView className="flex-1 items-center gap-10 bg-white p-4">
+    <SafeAreaView className="flex-1 gap-10 bg-white p-4">
       {bike ? (
-        <>
+        <View>
           <TouchableOpacity
             className="bg-yellow-000-color items-center rounded-md border p-4 text-base text-white"
             onPress={() =>
@@ -58,19 +56,21 @@ const Index = () => {
             <Text>Finish storage reading QR</Text>
           </TouchableOpacity>
           <>{finishStorageMutation.isLoading && <ActivityIndicator />}</>
-        </>
+        </View>
       ) : (
-        <TouchableOpacity
-          className="bg-yellow-000-color items-center rounded-md border p-4 text-base text-white"
-          onPress={() =>
-            router.push({
-              pathname: "ScannerBarCode",
-              params: { backPath: "FinishStorage" },
-            })
-          }
-        >
-          <Text>Read code128</Text>
-        </TouchableOpacity>
+        <View className="flex-1 ">
+          <View className="flex-1 items-center justify-end pb-10 ">
+            <Button
+              text="Escanear"
+              onPress={() =>
+                router.push({
+                  pathname: "ScannerBarCode",
+                  params: { backPath: "FinishStorage" },
+                })
+              }
+            />
+          </View>
+        </View>
       )}
     </SafeAreaView>
   );

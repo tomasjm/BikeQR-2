@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 import { api } from "~/utils/api";
 import HomeList from "~/components/HomeList";
@@ -10,7 +11,10 @@ import useRole from "~/hooks/useRole";
 import { mockData } from "../mocks/mockData";
 
 const HomePageView = () => {
-  const { data, isSuccess } = api.auth.getSession.useQuery();
+  const router = useRouter();
+  const { data, isSuccess } = api.auth.getSession.useQuery(undefined, {
+    refetchOnMount: "always",
+  });
   const { error, token, notification, requestPermissions } = useNotifications();
   const setupNotificationMutation =
     api.notifications.saveExpoPushToken.useMutation();
@@ -29,7 +33,17 @@ const HomePageView = () => {
 
   useEffect(() => {
     if (notification) {
-      alert(JSON.stringify(notification.request.content.data));
+      const { data, type } = notification.request.content.data;
+      if (type == "FINISH_STORAGE") {
+        router.push({
+          pathname: "FinishTest",
+          params: {
+            token: data.token,
+            code: data.bike.code,
+            description: data.bike.description,
+          },
+        });
+      }
     }
   }, [notification]);
 
