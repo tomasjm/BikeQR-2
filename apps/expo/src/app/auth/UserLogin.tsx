@@ -35,7 +35,7 @@ export default function UserLogin() {
       const token = userLoginMutation.data?.token;
       setToken(token as string);
       storeData(token as string);
-      router.replace("/home");
+      router.push("/home");
     } else if (userLoginMutation.data?.error) {
       alert("error:" + userLoginMutation.data?.msg);
     }

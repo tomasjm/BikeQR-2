@@ -19,7 +19,7 @@ const Index = () => {
           checkSessionMutation.mutate();
           // value previously stored
         } else {
-          router.replace("/auth/UserLogin");
+          router.push("/auth/UserLogin");
         }
       } catch (e) {
         alert("error " + e);

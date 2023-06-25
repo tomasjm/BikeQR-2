@@ -5,7 +5,7 @@ import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 
 export default () => {
   // const { data } = api.auth.getSession.useQuery();
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <SafeAreaProvider>
@@ -13,13 +13,14 @@ export default () => {
         screenOptions={{
           tabBarStyle: {
             backgroundColor: "#000",
+            height: 60,
           },
 
           tabBarShowLabel: false,
           tabBarInactiveTintColor: "lightgray",
           tabBarActiveTintColor: "#FFFFFF",
           headerStyle: {
-            backgroundColor: "#FFFFFF",
+            backgroundColor: "#FFD23A",
           },
           headerTintColor: "#000",
           headerTitleStyle: {
@@ -36,13 +37,13 @@ export default () => {
                 onPress={() => {
                   router.push("./AccountView");
                 }}
-                className="flex-col items-end -space-y-4 pr-4 opacity-40"
+                className="color-white mr-3 flex-col items-end -space-y-4 rounded-full opacity-80 "
               >
-                <MaterialIcons name="account-circle" size={38} color="black" />
+                <MaterialIcons name="account-circle" size={40} color="black" />
               </TouchableOpacity>
             ),
             tabBarIcon: ({ color }) => (
-              <FontAwesome name="home" size={24} color={color}></FontAwesome>
+              <FontAwesome name="home" size={30} color={color}></FontAwesome>
             ),
           }}
         />
@@ -51,8 +52,8 @@ export default () => {
           name="HelpView"
           options={{
             title: "Ayuda",
-            tabBarIcon: () => (
-              <MaterialIcons name="help-center" size={24} color="white" />
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="help-center" size={30} color={color} />
             ),
           }}
         />
@@ -60,8 +61,8 @@ export default () => {
           name="AccountView"
           options={{
             title: "Cuenta",
-            tabBarIcon: () => (
-              <MaterialIcons name="account-circle" size={24} color="white" />
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="account-circle" size={30} color={color} />
             ),
           }}
         />

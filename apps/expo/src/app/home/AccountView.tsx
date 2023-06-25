@@ -11,10 +11,10 @@ export default function AccountView() {
   const router = useRouter();
   useEffect(() => {
     if (startLogout && (logout.isSuccess || logout.isError)) {
-      AsyncStorage.removeItem("@token");
       setToken("");
+      AsyncStorage.removeItem("@token");
       console.log("logout");
-      router.replace("auth/UserLogin");
+      router.push("auth/UserLogin");
     }
   }, [logout.isSuccess, logout.isError, startLogout]);
   return (
