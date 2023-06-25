@@ -7,44 +7,42 @@ import { api, setToken } from "../utils/api";
 
 const Index = () => {
   const checkSessionMutation = api.auth.checkSession.useMutation();
-  const router = useRouter()
+  const router = useRouter();
 
   // Se carga el token del AsyncStorage
   useEffect(() => {
     const getData = async () => {
       try {
-        const token = await AsyncStorage.getItem('@token')
+        const token = await AsyncStorage.getItem("@token");
         if (token !== null) {
-          setToken(token)
-          checkSessionMutation.mutate()
+          setToken(token);
+          checkSessionMutation.mutate();
           // value previously stored
         } else {
-          router.replace("/auth/UserLogin")
+          router.replace("/auth/UserLogin");
         }
       } catch (e) {
-        alert("error " + e)
+        alert("error " + e);
         // error reading value
       }
-    }
-    getData()
+    };
+    getData();
   }, []);
-
 
   if (checkSessionMutation.isSuccess) {
     return <Redirect href="/home" />;
   }
 
   if (checkSessionMutation.isError) {
-    return <Redirect href="/auth/UserLogin" />
+    return <Redirect href="/auth/UserLogin" />;
   }
 
   return (
     <View className="flex-1 items-center justify-center">
-      <Text>hola mundo</Text>
       {checkSessionMutation.isLoading && (
         <View>
           <ActivityIndicator size="large" color="#000" />
-          <Text className="text-base font-semibold">Cargando</Text>
+          <Text className="text-base font-semibold">Cargando...</Text>
         </View>
       )}
     </View>

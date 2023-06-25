@@ -1,13 +1,21 @@
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
+import { Data } from "types";
 
-export const HomeListButtons = ({ item }: { item: any }) => {
+interface Props {
+  item: Data;
+}
+export const HomeListButtons = ({ item }: Props) => {
   const router = useRouter();
   return (
     <TouchableOpacity
       className="bg-white p-4"
-      onPress={() => router.push(item.screen)}
+      onPress={() =>
+        router.push({
+          pathname: item.screen,
+        })
+      }
     >
       <View
         key={item.id}

@@ -3,9 +3,9 @@ import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import usePusher from "~/hooks/usePusher";
 
 import { api } from "~/utils/api";
+import usePusher from "~/hooks/usePusher";
 
 const StartStorage = () => {
   const router = useRouter();
@@ -15,20 +15,21 @@ const StartStorage = () => {
   const validateCodeMutation = api.bike.validateCode.useMutation();
   const startStorageProcess = api.storage.startStorageProcess.useMutation();
 
-  const { isSuccess, subscribe } = usePusher({ channel: storageId, event: "START_STORAGE" });
-
+  const { isSuccess, subscribe } = usePusher({
+    channel: storageId,
+    event: "START_STORAGE",
+  });
   useEffect(() => {
     if (isSuccess) {
-      alert("se completó el storage")
+      alert("se completó el storage");
     }
-
-  }, [isSuccess])
+  }, [isSuccess]);
 
   useEffect(() => {
     if (qr) {
-      subscribe()
+      subscribe();
     }
-  }, [qr])
+  }, [qr]);
 
   useEffect(() => {
     if (type == BarCodeScanner.Constants.BarCodeType.code128) {
@@ -52,10 +53,10 @@ const StartStorage = () => {
     if (startStorageProcess.isSuccess) {
       const data = startStorageProcess.data;
       if (data.error) {
-        return alert(`Error!: ${data.msg}`)
+        return alert(`Error!: ${data.msg}`);
       }
       const storage = startStorageProcess.data.storage;
-      setStorageId(storage?.id as string)
+      setStorageId(storage?.id as string);
       setQR(storage?.token.token as string);
     }
   }, [startStorageProcess.isSuccess]);
