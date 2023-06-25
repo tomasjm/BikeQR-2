@@ -7,9 +7,11 @@ import HomePageViewList from "~/components/HomePageList";
 import useNotifications from "~/hooks/useNotifications";
 import useRole from "~/hooks/useRole";
 import { UserRole } from "~/atoms";
+import { useRouter } from "expo-router";
 
 const HomePageView = () => {
-  const { data, isSuccess } = api.auth.getSession.useQuery();
+  const router = useRouter()
+  const { data, isSuccess } = api.auth.getSession.useQuery(undefined, { refetchOnMount: "always" });
   const { error, token, notification, requestPermissions } = useNotifications();
   const setupNotificationMutation =
     api.notifications.saveExpoPushToken.useMutation();
@@ -17,6 +19,7 @@ const HomePageView = () => {
   const { setRole } = useRole()
   useEffect(() => {
     if (isSuccess) {
+      console.log("ROL:", data?.user.role)
       setRole(data?.user.role as UserRole)
     }
   }, [isSuccess])
@@ -28,7 +31,8 @@ const HomePageView = () => {
 
   useEffect(() => {
     if (notification) {
-      alert(JSON.stringify(notification.request.content.data));
+      router.push({ pathname: "FinishTest", params: { data: notification.request.content.data } })
+      console.log(notification.request.content)
     }
   }, [notification]);
 

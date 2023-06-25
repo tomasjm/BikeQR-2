@@ -5,7 +5,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { api, setToken } from "~/utils/api";
 
+
+
 export default function AccountView() {
+  const utils = api.useContext();
   const [startLogout, setStartLogout] = useState<boolean>(false);
   const logout = api.auth.logout.useMutation();
   const router = useRouter();
@@ -13,7 +16,8 @@ export default function AccountView() {
     if (startLogout && (logout.isSuccess || logout.isError)) {
       AsyncStorage.removeItem("@token");
       setToken("");
-      console.log("logout");
+      console.log("OK")
+      utils.invalidate()
       router.replace("auth/UserLogin");
     }
   }, [logout.isSuccess, logout.isError, startLogout]);
