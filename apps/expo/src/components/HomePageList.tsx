@@ -4,8 +4,10 @@ import { Data } from "types";
 
 import { mockData } from "~/app/mocks/mockData";
 import { HomeListButtons } from "./HomeListButtons";
+import useRole from "~/hooks/useRole";
 
-function HomePageViewList({ role }: { role: string }) {
+function HomePageViewList() {
+  const { role } = useRole();
   return (
     <FlatList
       data={mockData}
