@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, {  useState } from "react";
+import { ActivityIndicator, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import LottieView from "lottie-react-native";
 
 import { api } from "~/utils/api";
 import Button from "~/components/Button";
@@ -26,13 +21,19 @@ const BikeRegister = () => {
     registerBike.mutate({ description });
   };
 
-  useEffect(() => {
-    if (registerBike.isSuccess) {
-      alert("Bicicleta agregada!");
-      router.back();
-    }
-  }, [registerBike.isSuccess]);
-
+  if (registerBike.isSuccess) {
+    return (
+      <SafeAreaView className="flex-1 items-center justify-center">
+        <LottieView
+          autoPlay
+          loop={false}
+          onAnimationFinish={() => router.back()}
+          style={{ width: 150, height: 150 }}
+          source={require("../resources/successAnimation.json")}
+        />
+      </SafeAreaView>
+    );
+  }
   if (registerBike.isError) {
     alert("Ha ocurrido un error!");
   }
@@ -40,9 +41,9 @@ const BikeRegister = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="mx-4 space-y-2 pb-2">
-        <Text className="p-4 text-center text-base italic">
-          Por favor, para confirmar el guardado escanee el código QR en la
-          pantalla del encargado
+        <Text className="p-4 text-left text-base font-semibold italic">
+          Por favor, ingrese la descripción de su bicicleta en el campo a
+          continuación:
         </Text>
         <TextInput
           placeholder="Description"
@@ -53,7 +54,9 @@ const BikeRegister = () => {
       </View>
       <View className="mx-4 items-center">
         {registerBike.isLoading ? (
-          <ActivityIndicator />
+          <View className="items-center justify-end">
+            <ActivityIndicator size="large" color="#000" />
+          </View>
         ) : (
           <Button text="Registrar" onPress={() => handleSubmit()} />
         )}

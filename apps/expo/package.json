@@ -33,6 +33,7 @@
     "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
     "jotai": "^2.2.1",
+    "lottie-react-native": "5.1.4",
     "nativewind": "^2.0.11",
     "pusher-js": "^8.2.0",
     "react": "18.2.0",

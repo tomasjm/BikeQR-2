@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { View } from "react-native";
 import { Redirect, useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LottieView from "lottie-react-native";
 
 import { api, setToken } from "../utils/api";
 
 const Index = () => {
   const checkSessionMutation = api.auth.checkSession.useMutation();
   const router = useRouter();
-
+  const animation = useRef(null);
   // Se carga el token del AsyncStorage
   useEffect(() => {
     const getData = async () => {
@@ -41,8 +42,14 @@ const Index = () => {
     <View className="flex-1 items-center justify-center">
       {checkSessionMutation.isLoading && (
         <View>
-          <ActivityIndicator size="large" color="#000" />
-          <Text className="text-base font-semibold">Cargando...</Text>
+          <View className=" items-center justify-center">
+            <LottieView
+              autoPlay
+              loop
+              style={{ width: 500, height: 500 }}
+              source={require("../resources/loadingbike.json")}
+            />
+          </View>
         </View>
       )}
     </View>

@@ -28,7 +28,15 @@ const RootLayout = () => {
           <Stack.Screen
             name="index"
             options={{
-              title: "Inicio",
+              title: "BIKEQR",
+              headerStyle: {
+                backgroundColor: "#FFD23A",
+              },
+              headerTintColor: "#000",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              headerTitleAlign: "center",
             }}
           />
           <Stack.Screen
