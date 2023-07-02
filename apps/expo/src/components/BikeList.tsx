@@ -18,7 +18,10 @@ function BikeList({ data }: Bici) {
           className="bg-white p-4"
           onPress={() =>
             router.push({
-              pathname: "BikeDetail",
+              pathname: "/BikeDetail",
+              params: {
+                ...item
+              }
             })
           }
         >
