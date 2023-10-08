@@ -5,6 +5,7 @@ import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 import { sign } from "@acme/jwt"
 
+
 export const authRouter = createTRPCRouter({
   register: publicProcedure.input(z.object({ email: z.string(), password: z.string() })).mutation(async ({ ctx, input }) => {
     const { email, password } = input;
@@ -47,7 +48,7 @@ export const authRouter = createTRPCRouter({
     if (user?.password) {
       const passwordAreEquals = await bcrypt.compare(password, user.password);
       if (passwordAreEquals) {
-        const token = sign({ userId: user.id }, "123")
+        const token = sign({ userId: user.id })
         return {
           error: false,
           token

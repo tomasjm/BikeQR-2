@@ -12,11 +12,19 @@ import {
   publicProcedure,
 } from "../trpc";
 
+
+const PUSHER_ID = process.env.PUSHER_ID
+const PUSHER_KEY = process.env.PUSHER_KEY
+const PUSHER_SECRET = process.env.PUSHER_SECRET
+const PUSHER_CLUSTER = process.env.PUSHER_CLUSTER
+
+const pusherStringParser = z.string().min(3, "PUSHER ENV LENGTH")
+
 const pusher = new Pusher({
-  appId: "1624027",
-  key: "68a92baa7c1b8cdaed4f",
-  secret: "4a0936ce7115422a4bd6",
-  cluster: "us2",
+  appId: pusherStringParser.parse(PUSHER_ID),
+  key: pusherStringParser.parse(PUSHER_KEY),
+  secret: pusherStringParser.parse(PUSHER_SECRET),
+  cluster: pusherStringParser.parse(PUSHER_CLUSTER),
 });
 
 export const storageRouter = createTRPCRouter({
@@ -67,7 +75,7 @@ export const storageRouter = createTRPCRouter({
       const { userId, bikeId } = input;
       const attendantId = ctx.userId;
       const payload = { userId, attendantId, bikeId };
-      const token = sign(payload, "123");
+      const token = sign(payload);
       await ctx.prisma.storage.updateMany({
         where: { bikeId, status: Status.NOT_STORED },
         data: {
@@ -135,7 +143,7 @@ export const storageRouter = createTRPCRouter({
       const { token, bikeCode } = input;
       let payload;
       try {
-        const data = verify(token, "123");
+        const data = verify(token);
         payload = data;
       } catch {
         return {
