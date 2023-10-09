@@ -55,7 +55,7 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
       const token = req.headers.authorization?.split(" ")[1];
       if (token) {
         try {
-          const payload = verify(token, "123")
+          const payload = verify(token)
           const { userId } = payload as { userId: string };
           return userId
         } catch {
