@@ -26,10 +26,8 @@ const Index = () => {
     event: "FINISH_STORAGE",
   });
   const finishStorageMutation = api.storage.finishStorageProcess.useMutation();
-
   useEffect(() => {
     if (type == BarCodeScanner.Constants.BarCodeType.qr) {
-      console.log("finish");
       const token = data as string;
       const bikeCode = bike;
       finishStorageMutation.mutate({ token, bikeCode });
@@ -65,25 +63,30 @@ const Index = () => {
   }, [isSuccess]);
 
   return (
-    <SafeAreaView className="flex-1 gap-10 bg-white p-4">
-      {bike ? (
-        <View>
-          <TouchableOpacity
-            className="bg-yellow-000-color items-center rounded-md border p-4 text-base text-white"
+    <SafeAreaView className="flex-1 bg-white p-4">
+      {!bike ? (
+        <View className="items-center justify-center gap-4">
+          <Text className="text-center text-base font-semibold">
+            Por favor, escanee el código QR que se encuentra en la pantalla del
+            usuario.
+          </Text>
+          <Button
+            text="Escanear QR"
             onPress={() =>
               router.push({
                 pathname: "ScannerBarCode",
                 params: { backPath: "FinishStorage" },
               })
             }
-          >
-            <Text>Finish storage reading QR</Text>
-          </TouchableOpacity>
+          />
           <>{finishStorageMutation.isLoading && <ActivityIndicator />}</>
         </View>
       ) : (
         <View className="flex-1 ">
-          <View className="flex-1 items-center justify-end pb-10 ">
+          <View className=" items-center  gap-3 ">
+            <Text className="items-center text-center ">
+              Por favor, escanee el código de barras de la bicicleta.
+            </Text>
             <Button
               text="Escanear"
               onPress={() =>

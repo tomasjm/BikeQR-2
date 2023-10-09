@@ -1,14 +1,24 @@
 import React from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 
-import { ItemCard } from "./ItemCard";
+import { BikeListCard } from "./BikeListCard";
 
 type Bici = {
-  data: any;
+  data:
+    | {
+        title: string;
+        id: string;
+        code: string;
+        userId: string;
+        createdAt: Date;
+        updatedAt: Date;
+      }[]
+    | undefined;
 };
 function BikeList({ data }: Bici) {
   const router = useRouter();
+
   return (
     <FlatList
       data={data}
@@ -20,12 +30,14 @@ function BikeList({ data }: Bici) {
             router.push({
               pathname: "/BikeDetail",
               params: {
-                ...item
-              }
+                ...item,
+                createdAt: item.createdAt.toISOString(),
+                updatedAt: item.updatedAt.toISOString(),
+              },
             })
           }
         >
-          <ItemCard item={item} />
+          <BikeListCard item={item} />
         </TouchableOpacity>
       )}
     />

@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { DataList } from "types";
+import { type DataList } from "types";
 
 import useRole from "~/hooks/useRole";
 import { ItemCard } from "./ItemCard";

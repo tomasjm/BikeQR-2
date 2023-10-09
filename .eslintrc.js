@@ -3,6 +3,10 @@ const config = {
   root: true,
   extends: ["@acme/eslint-config"], // uses the config in `packages/config/eslint`
   parser: "@typescript-eslint/parser",
+  rules: {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unsafe-assignment":"off",
+  },
   parserOptions: {
     ecmaVersion: "latest",
     tsconfigRootDir: __dirname,

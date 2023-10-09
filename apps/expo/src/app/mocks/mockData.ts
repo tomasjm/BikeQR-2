@@ -1,4 +1,4 @@
-import { DataList } from "types";
+import { type DataList } from "types";
 
 export const mockData: DataList = [
   {
