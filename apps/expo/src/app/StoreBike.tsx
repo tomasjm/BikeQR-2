@@ -26,7 +26,8 @@ export default function StoreBike() {
       const storeQr = async (token: string, codeBike: string) => {
         try {
           await AsyncStorage.setItem(`@${codeBike}`, token);
-          alert("Se ha guardado la bicicleta")
+          alert("Se ha guardado la bicicleta");
+          router.push("/");
         } catch (e) {
           alert("error " + e);
         }
