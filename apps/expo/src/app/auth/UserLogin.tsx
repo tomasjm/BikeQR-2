@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Controller, useForm } from "react-hook-form";
 
 import { api, setToken } from "~/utils/api";
-import { UserRegisterProps } from "./UserRegister";
+import { type UserRegisterProps } from "./UserRegister";
 
 export default function UserLogin() {
   const {

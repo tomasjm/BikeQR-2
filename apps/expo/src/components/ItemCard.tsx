@@ -13,7 +13,7 @@ export const ItemCard = ({ item }: Props) => {
     >
       <Image
         alt="Logo image for the item on the list"
-        className="h-40 w-40"
+        className="h-36 w-36"
         style={{ resizeMode: "contain" }}
         source={item.image}
       />
