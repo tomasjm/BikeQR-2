@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 
 import { api } from "~/utils/api";
 import HomeList from "~/components/HomeList";
-import { UserRole } from "~/atoms";
+import { type UserRole } from "~/atoms";
 import useNotifications from "~/hooks/useNotifications";
 import useRole from "~/hooks/useRole";
 import { mockData } from "../mocks/mockData";
@@ -15,6 +15,7 @@ const HomePageView = () => {
   const { data, isSuccess } = api.auth.getSession.useQuery(undefined, {
     refetchOnMount: "always",
   });
+
   const { error, token, notification, requestPermissions } = useNotifications();
   const setupNotificationMutation =
     api.notifications.saveExpoPushToken.useMutation();
