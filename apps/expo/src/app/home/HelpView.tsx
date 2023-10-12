@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TextInput, View } from "react-native";
+import { useFocusEffect } from "expo-router";
 import { EvilIcons, SimpleLineIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
 
@@ -10,75 +11,24 @@ export default function HelpView() {
     handleSubmit,
     control,
     formState: { errors },
+    clearErrors,
   } = useForm();
   const onSubmit = (data: any) => {
     console.log(data);
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      clearErrors();
+    }, []),
+  );
+
   return (
     <View
       style={{
         flex: 1,
-        paddingTop: 20,
       }}
     >
-      <View className="">
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            paddingTop: 20,
-          }}
-        >
-          <SimpleLineIcons
-            name="question"
-            size={20}
-            color="black"
-            style={{
-              paddingLeft: 24,
-            }}
-          />
-          <Text
-            style={{
-              fontSize: 16,
-              lineHeight: 19,
-              color: "#000000",
-              paddingLeft: 15,
-              paddingRight: 60,
-            }}
-          >
-            En esta sección, usted podrá otorgar retroalimentación o consultar
-            acerca de problemas sobre el uso de la aplicación.
-          </Text>
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            paddingTop: 20,
-          }}
-        >
-          <EvilIcons
-            name="exclamation"
-            size={30}
-            color="black"
-            style={{
-              paddingLeft: 20,
-            }}
-          />
-          <Text
-            style={{
-              fontSize: 16,
-              lineHeight: 19,
-              color: "#000000",
-              paddingLeft: 10,
-              paddingRight: 60,
-            }}
-          >
-            Nos comunicaremos con usted a través de correo electrónico.
-          </Text>
-        </View>
-      </View>
       <View className="space-y-2 px-5 pt-10">
         <View>
           <Controller
@@ -103,6 +53,7 @@ export default function HelpView() {
                     borderRadius: 5,
                     padding: 12,
                   }}
+                  className="border-gray-300"
                   placeholder="Escriba el asunto del problema ..."
                   onChangeText={onChange}
                   value={value}
@@ -111,8 +62,17 @@ export default function HelpView() {
             )}
             name="issue"
           />
-          {errors.name && (
-            <Text className="pl-[40px] text-red-600">Campo requerido</Text>
+          {errors.issue && (
+            <Text
+              style={{
+                color: "#ff0000",
+                fontSize: 14,
+                textAlign: "right",
+                paddingRight: 2,
+              }}
+            >
+              Campo requerido
+            </Text>
           )}
         </View>
         <View>
@@ -156,12 +116,79 @@ export default function HelpView() {
             name="description"
           />
           {errors.description && (
-            <Text className="pl-[40px] text-red-600">Campo requerido</Text>
+            <Text
+              style={{
+                color: "#ff0000",
+                fontSize: 14,
+                textAlign: "right",
+                paddingRight: 2,
+              }}
+            >
+              Campo requerido
+            </Text>
           )}
         </View>
       </View>
       <View className="items-end px-5 pt-5">
         <Button onPress={handleSubmit(onSubmit)} text="Enviar" />
+      </View>
+      <View className="flex-1 justify-center">
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingTop: 20,
+          }}
+        >
+          <SimpleLineIcons
+            name="question"
+            size={20}
+            color="#000000"
+            style={{
+              paddingLeft: 24,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 14,
+              lineHeight: 19,
+              color: "#000000",
+              paddingLeft: 15,
+              paddingRight: 60,
+            }}
+          >
+            En esta sección, usted podrá otorgar retroalimentación o consultar
+            acerca de problemas sobre el uso de la aplicación.
+          </Text>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingTop: 20,
+          }}
+        >
+          <EvilIcons
+            name="exclamation"
+            size={30}
+            color="#000000"
+            style={{
+              paddingLeft: 20,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 14,
+              lineHeight: 19,
+              color: "#000000",
+              paddingLeft: 10,
+              paddingRight: 60,
+            }}
+          >
+            Nos comunicaremos con usted a través de correo electrónico.
+          </Text>
+        </View>
       </View>
     </View>
   );
