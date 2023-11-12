@@ -45,6 +45,7 @@ export default function UserLogin() {
       <View className="space-y-4">
         <View className="-mb-10 -mt-10 items-center">
           <Image
+            alt="Logo de BikeQR"
             style={{ resizeMode: "cover", width: 380, height: 380 }}
             source={require("../../resources/BikeQRVectorLogo.png")}
           />

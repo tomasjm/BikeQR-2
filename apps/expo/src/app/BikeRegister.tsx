@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
@@ -18,7 +18,11 @@ const BikeRegister = () => {
   };
 
   const handleSubmit = () => {
-    registerBike.mutate({ description });
+    if (description === "") {
+      alert("Por favor, ingrese una descripción");
+    } else {
+      registerBike.mutate({ description });
+    }
   };
 
   if (registerBike.isSuccess) {
