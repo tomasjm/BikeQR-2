@@ -3,7 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Tabs, useRouter } from "expo-router";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 
-export default () => {
+export const HomeLayout = () => {
   // const { data } = api.auth.getSession.useQuery();
   const router = useRouter();
 
@@ -15,7 +15,6 @@ export default () => {
             backgroundColor: "#000",
             height: 60,
           },
-
           tabBarShowLabel: false,
           tabBarInactiveTintColor: "lightgray",
           tabBarActiveTintColor: "#FFFFFF",
@@ -70,3 +69,4 @@ export default () => {
     </SafeAreaProvider>
   );
 };
+export default HomeLayout;

@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { api } from "~/utils/api";
 import BikeList from "~/components/BikeList";
+import LoadingView from "~/components/LoadingView";
 
 function UserBikeList() {
   const { data } = api.bike.listUserBikes.useQuery();
@@ -13,7 +14,7 @@ function UserBikeList() {
 
   return (
     <SafeAreaView className="flex-1 items-center bg-white">
-      <BikeList data={mappedData} />
+      {data ? <BikeList data={mappedData} /> : <LoadingView />}
     </SafeAreaView>
   );
 }
