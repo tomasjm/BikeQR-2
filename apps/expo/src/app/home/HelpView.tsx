@@ -3,10 +3,11 @@ import { Text, TextInput, View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { EvilIcons, SimpleLineIcons } from "@expo/vector-icons";
 import { Controller, useForm } from "react-hook-form";
-
+import { api } from "~/utils/api";
 import Button from "~/components/Button";
 
 export default function HelpView() {
+  const sendEmail = api.email.send.useMutation();
   const {
     handleSubmit,
     control,
@@ -14,7 +15,8 @@ export default function HelpView() {
     clearErrors,
   } = useForm();
   const onSubmit = (data: any) => {
-    console.log(data);
+    const { issue, description } = data;
+    sendEmail({ subject: issue, body: description })
   };
 
   useFocusEffect(
