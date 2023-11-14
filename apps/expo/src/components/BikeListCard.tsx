@@ -18,9 +18,6 @@ export const BikeListCard = ({ item }: Props) => {
     bikeId: item.id,
   });
 
-  //TODO: integrar skeleton
-  //const isLoading = data === undefined;
-
   const setStatusColor = (data: any) => {
     switch (data) {
       case "STORED":

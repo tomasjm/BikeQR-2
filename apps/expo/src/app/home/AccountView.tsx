@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -47,14 +47,19 @@ export default function AccountView() {
   const handleIsDisabled = () => {
     setIsDisabled(!isDisabled);
   };
-  useEffect(() => {
+
+  const logOutAction = useCallback(() => {
     if (startLogout && (logout.isSuccess || logout.isError)) {
       setToken("");
       console.log("OK");
       utils.invalidate();
       router.replace("auth/UserLogin");
     }
-  }, [logout.isSuccess, logout.isError, startLogout]);
+  }, [startLogout, logout.isSuccess, logout.isError]);
+
+  useEffect(() => {
+    logOutAction();
+  }, [logOutAction]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -109,7 +114,12 @@ export default function AccountView() {
                   text={!isDisabled ? "Editar" : "Cancelar"}
                 />
                 {isDisabled && (
-                  <Button onPress={handleSubmit(onSubmit)} text="Guardar" />
+                  <Button
+                    onPress={() => {
+                      handleSubmit(onSubmit);
+                    }}
+                    text="Guardar"
+                  />
                 )}
               </View>
               <View
