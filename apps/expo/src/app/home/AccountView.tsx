@@ -15,6 +15,7 @@ import { api, setToken } from "~/utils/api";
 import Button from "~/components/Button";
 import InputForm from "~/components/InputForm";
 import LoadingView from "~/components/LoadingView";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type User = {
   id: string;
@@ -56,10 +57,11 @@ export default function AccountView() {
     }
   }, [editUser.isSuccess]);
 
-  const logOutAction = useCallback(() => {
+  const logOutAction = useCallback(async () => {
     if (startLogout && (logout.isSuccess || logout.isError)) {
       setToken("");
       console.log("OK");
+      await AsyncStorage.removeItem("@token");
       utils.invalidate();
       router.replace("auth/UserLogin");
     }
