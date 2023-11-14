@@ -1,8 +1,16 @@
-import React from "react";
-import { Text, TextInput, View } from "react-native";
+import React, { useEffect } from "react";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { useFocusEffect } from "expo-router";
 import { EvilIcons, SimpleLineIcons } from "@expo/vector-icons";
+import LottieView from "lottie-react-native";
 import { Controller, useForm } from "react-hook-form";
+
 import { api } from "~/utils/api";
 import Button from "~/components/Button";
 
@@ -13,18 +21,50 @@ export default function HelpView() {
     control,
     formState: { errors },
     clearErrors,
+    reset,
   } = useForm();
   const onSubmit = (data: any) => {
     const { issue, description } = data;
-    sendEmail({ subject: issue, body: description })
+    sendEmail.mutate({ subject: issue, body: description });
   };
+  useEffect(() => {
+    if (sendEmail.isSuccess && !sendEmail.isLoading) {
+      reset({ description: "", issue: "" });
+    }
+  }, [sendEmail.isSuccess, sendEmail.isLoading]);
 
   useFocusEffect(
     React.useCallback(() => {
       clearErrors();
     }, []),
   );
-
+  if (sendEmail.isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
+  if (sendEmail.isSuccess) {
+    return (
+      <SafeAreaView className="flex-1 items-center justify-center">
+        <LottieView
+          autoPlay
+          loop={false}
+          onAnimationFinish={() => {
+            sendEmail.reset();
+          }}
+          style={{ width: 150, height: 150 }}
+          source={require("../../resources/successAnimation.json")}
+        />
+      </SafeAreaView>
+    );
+  }
   return (
     <View
       style={{
@@ -132,7 +172,12 @@ export default function HelpView() {
         </View>
       </View>
       <View className="items-end px-5 pt-5">
-        <Button onPress={handleSubmit(onSubmit)} text="Enviar" />
+        <Button
+          onPress={() => {
+            handleSubmit(onSubmit);
+          }}
+          text="Enviar"
+        />
       </View>
       <View className="flex-1 justify-center">
         <View

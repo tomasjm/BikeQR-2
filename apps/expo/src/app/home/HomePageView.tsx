@@ -28,7 +28,7 @@ const HomePageView = () => {
   }, [isSuccess]);
 
   useEffect(() => {
-    console.log("pidiendo permisos");
+    console.log("Pidiendo permisos...");
     requestPermissions();
   }, []);
 

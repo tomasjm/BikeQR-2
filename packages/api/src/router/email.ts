@@ -1,36 +1,42 @@
+import nodemailer from "nodemailer";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { Resend } from 'resend';
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY
-const RESEND_EMAIL = process.env.RESEND_EMAIL
-const resendParser = z.string().min(3, "RESEND ENV LENGTH")
-const resend = new Resend(resendParser.parse(RESEND_API_KEY));
-const admin_email = resendParser.parse(RESEND_EMAIL)
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    //TODO: cambiar a .env
+    user: "bikeqr.business@gmail.com",
+    pass: "snfy jtdn kizr njdp",
+  },
+});
 
-export const userRouter = createTRPCRouter({
+export const emailRouter = createTRPCRouter({
   send: protectedProcedure
     .input(z.object({ subject: z.string(), body: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
       const { subject, body } = input;
-      const user = await ctx.prisma.user.findUnique({ where: { id: userId } })
+      const user = await ctx.prisma.user.findUnique({ where: { id: userId } });
       if (user) {
         const { name, email } = user;
-        resend.emails.send({
-          from: email,
-          to: admin_email,
-          subject: subject,
-          html: `<h3>${name}<h3><br/><p>${body}</p>`
+        const info = await transporter.sendMail({
+          from: `"${name}" <${email}>`, // sender address
+          to: "bikeqr.business@gmail.com", // list of receivers
+          subject: `${name}: ${subject}`, // Subject line
+          html: `${body}, <br/> Correo: ${email}`, // html body
         });
+        console.log(info);
         return {
-          error: false
+          error: false,
         };
       }
       return {
         error: true,
-        msg: "No se ha podido enviar correo desde el usuario"
-      }
-    })
+        msg: "No se ha podido enviar correo desde el usuario",
+      };
+    }),
 });

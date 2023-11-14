@@ -12,18 +12,9 @@ import { type AppRouter } from "@acme/api";
  */
 export const api = createTRPCReact<AppRouter>();
 export { type RouterInputs, type RouterOutputs } from "@acme/api";
-export let token: string = "a";
+export let token = "a";
 export const setToken = (newToken: string) => {
   token = newToken;
-};
-export const validatePermissionUser = (role: string) => {
-  return role === "USER";
-};
-export const validatePermissionAdmin = (role: string) => {
-  return role === "ATTENDANT";
-};
-export const validateUserRole = (role: string) => {
-  return api.auth.getSession.useQuery().data?.user?.role === role;
 };
 
 /**

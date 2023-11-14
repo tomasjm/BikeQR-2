@@ -3,7 +3,6 @@ import {
   ActivityIndicator,
   SafeAreaView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
