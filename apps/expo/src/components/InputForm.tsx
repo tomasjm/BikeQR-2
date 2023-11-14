@@ -20,6 +20,9 @@ export default function InputForm({
   value,
   hiddenText,
 }: InputFormProps) {
+  function isEditable(name: string): boolean {
+    return name !== "role" && name !== "createdAt";
+  }
   return (
     <View>
       <Controller
@@ -44,7 +47,7 @@ export default function InputForm({
                 borderRadius: 5,
                 padding: 10,
               }}
-              editable={isDisabled}
+              editable={isEditable(name) && isDisabled}
               className="border-gray-300"
               onChangeText={onChange}
               value={
