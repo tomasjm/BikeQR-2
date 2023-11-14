@@ -11,4 +11,23 @@ export const userRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.prisma.user.findUnique({ where: { id: input.id } });
     }),
+  editUser: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        email: z.string(),
+        password: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.user.update({
+        where: { id: input.id },
+        data: {
+          name: input.name,
+          email: input.email,
+          password: input.password,
+        },
+      });
+    }),
 });

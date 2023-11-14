@@ -9,7 +9,7 @@ import {
 import { useFocusEffect } from "expo-router";
 import { EvilIcons, SimpleLineIcons } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, type FieldValues } from "react-hook-form";
 
 import { api } from "~/utils/api";
 import Button from "~/components/Button";
@@ -17,13 +17,12 @@ import Button from "~/components/Button";
 export default function HelpView() {
   const sendEmail = api.email.send.useMutation();
   const {
-    handleSubmit,
     control,
     formState: { errors },
     clearErrors,
     reset,
   } = useForm();
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FieldValues) => {
     const { issue, description } = data;
     sendEmail.mutate({ subject: issue, body: description });
   };
@@ -174,7 +173,7 @@ export default function HelpView() {
       <View className="items-end px-5 pt-5">
         <Button
           onPress={() => {
-            handleSubmit(onSubmit);
+            onSubmit(control._formValues);
           }}
           text="Enviar"
         />

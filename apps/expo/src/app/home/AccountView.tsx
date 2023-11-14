@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldValues } from "react-hook-form";
 
 import { ProfileDataTitles } from "~/utils/Titles";
 import { api, setToken } from "~/utils/api";
@@ -33,20 +33,28 @@ export default function AccountView() {
   const { data: userData } = api.user.one.useQuery({
     id: sessionId as string,
   });
+  const editUser = api.user.editUser.useMutation();
   const router = useRouter();
   const {
-    handleSubmit,
     control,
     formState: { errors },
     clearErrors,
   } = useForm();
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
 
-  const handleIsDisabled = () => {
+  const onSubmit = (data: FieldValues) => {
+    editUser.mutate({
+      id: sessionId as string,
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    });
     setIsDisabled(!isDisabled);
   };
+  useEffect(() => {
+    if (editUser.isSuccess) {
+      alert("Usuario actualizado correctamente");
+    }
+  }, [editUser.isSuccess]);
 
   const logOutAction = useCallback(() => {
     if (startLogout && (logout.isSuccess || logout.isError)) {
@@ -110,14 +118,12 @@ export default function AccountView() {
             >
               <View className="flex-row justify-end space-x-2 px-5 pt-5">
                 <Button
-                  onPress={handleIsDisabled}
+                  onPress={() => setIsDisabled(!isDisabled)}
                   text={!isDisabled ? "Editar" : "Cancelar"}
                 />
                 {isDisabled && (
                   <Button
-                    onPress={() => {
-                      handleSubmit(onSubmit);
-                    }}
+                    onPress={() => onSubmit(control._formValues)}
                     text="Guardar"
                   />
                 )}
