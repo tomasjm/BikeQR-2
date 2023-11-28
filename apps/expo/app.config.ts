@@ -2,7 +2,7 @@ import type { ExpoConfig } from "@expo/config";
 
 const defineConfig = (): ExpoConfig => ({
   name: "ufrobikeqr",
-  slug: "expo",
+  slug: "create-t3-turbo",
   scheme: "expo",
   version: "1.0.0",
   orientation: "portrait",
@@ -30,7 +30,7 @@ const defineConfig = (): ExpoConfig => ({
   },
   extra: {
     eas: {
-      projectId: "b946e683-a550-4214-9107-8d3512447ebb",
+      projectId: "43249fc0-60ea-45a0-aed2-684bc9da9aa8",
     },
   },
   plugins: ["./expo-plugins/with-modify-gradle.js"],

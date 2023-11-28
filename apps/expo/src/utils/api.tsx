@@ -1,5 +1,4 @@
 import React from "react";
-import Constants from "expo-constants";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
@@ -30,14 +29,14 @@ const getBaseUrl = () => {
    * **NOTE**: This is only for development. In production, you'll want to set the
    * baseUrl to your production API URL.
    */
-  const localhost = Constants.manifest?.debuggerHost?.split(":")[0];
-  if (!localhost) {
-    return "https://program-dist-bikeqr-ufro-bike-application-nextjs.vercel.app";
-    throw new Error(
-      "Failed to get localhost. Please point to your production server.",
-    );
-  }
-  return `http://${localhost}:3000`;
+  // const localhost = Constants.manifest?.debuggerHost?.split(":")[0];
+  // if (!localhost) {
+  return "https://program-dist-bikeqr-ufro-bike-application-nextjs.vercel.app/";
+  //   throw new Error(
+  //     "Failed to get localhost. Please point to your production server.",
+  //   );
+  // }
+  // return `http://${localhost}:3000`;
 };
 
 /**
