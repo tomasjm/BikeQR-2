@@ -15,11 +15,38 @@
       "ios": {
         "simulator": true,
         "resourceClass": "m-medium"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "DATABASE_URL": "postgresql://postgres:OSCWL6qK7j6yw0id@db.ecmtfkjhbgdpxxbgjwby.supabase.co:5432/postgres",
+        "NEXTAUTH_URL": "http://localhost:3000",
+        "NEXTAUTH_SECRET": "supersecret",
+        "JWT_SECRET": "abcsecretjwtxd",
+        "JWT_DURATION": "86400",
+        "PUSHER_ID": "1624027",
+        "PUSHER_KEY": "68a92baa7c1b8cdaed4f",
+        "PUSHER_SECRET": "4a0936ce7115422a4bd6",
+        "PUSHER_CLUSTER": "us2",
+        "EMAIL_PASSWORD": "snfy jtdn kizr njdp",
+        "EMAIL_ADDRESS": "bikeqr.business@gmail.com"
       }
     },
     "production": {
-      "ios": {
-        "resourceClass": "m-medium"
+      "distribution": "internal",
+      "env": {
+        "DATABASE_URL": "postgresql://postgres:OSCWL6qK7j6yw0id@db.ecmtfkjhbgdpxxbgjwby.supabase.co:5432/postgres",
+        "NEXTAUTH_URL": "http://localhost:3000",
+        "NEXTAUTH_SECRET": "supersecret",
+        "JWT_SECRET": "abcsecretjwtxd",
+        "JWT_DURATION": "86400",
+        "PUSHER_ID": "1624027",
+        "PUSHER_KEY": "68a92baa7c1b8cdaed4f",
+        "PUSHER_SECRET": "4a0936ce7115422a4bd6",
+        "PUSHER_CLUSTER": "us2",
+        "EMAIL_PASSWORD": "snfy jtdn kizr njdp",
+        "EMAIL_ADDRESS": "bikeqr.business@gmail.com"
       }
     }
   },

@@ -15,9 +15,8 @@
     "@acme/jwt": "*",
     "@expo/metro-config": "^0.7.1",
     "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "^1.18.2",
-    "@react-native-community/netinfo": "^9.3.10",
-    "@shopify/flash-list": "1.4.2",
+    "@react-native-async-storage/async-storage": "1.17.11",
+    "@react-native-community/netinfo": "9.3.7",
     "@tanstack/react-query": "^4.29.2",
     "@trpc/client": "^10.20.0",
     "@trpc/react-query": "^10.20.0",
@@ -39,9 +38,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.44.3",
-    "react-native": "0.71.7",
+    "react-native": "0.71.14",
     "react-native-qrcode-svg": "^6.2.0",
-    "react-native-safe-area-context": "4.5.1",
+    "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
     "react-native-svg": "13.4.0",
     "superjson": "1.9.1"
@@ -55,13 +54,13 @@
     "@babel/runtime": "^7.21.0",
     "@expo/config-plugins": "^6.0.1",
     "@types/babel__core": "^7.20.0",
-    "@types/react": "^18.0.37",
+    "@types/react": "~18.0.27",
     "@types/webpack-env": "^1.18.0",
     "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.38.0",
-    "postcss": "^8.4.22",
-    "tailwindcss": "^3.3.1",
-    "typescript": "^5.0.4"
+    "postcss": "8.4.23",
+    "tailwindcss": "3.3.2",
+    "typescript": "^4.9.4"
   },
   "private": true
 }

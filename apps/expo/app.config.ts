@@ -1,7 +1,7 @@
 import type { ExpoConfig } from "@expo/config";
 
 const defineConfig = (): ExpoConfig => ({
-  name: "expo",
+  name: "ufrobikeqr",
   slug: "expo",
   scheme: "expo",
   version: "1.0.0",
@@ -19,9 +19,10 @@ const defineConfig = (): ExpoConfig => ({
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "your.bundle.identifier",
+    bundleIdentifier: "com.ufrobikeqr",
   },
   android: {
+    package: "com.ufrobikeqr",
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
       backgroundColor: "#1F104A",
@@ -29,7 +30,7 @@ const defineConfig = (): ExpoConfig => ({
   },
   extra: {
     eas: {
-      // projectId: "your-project-id",
+      projectId: "b946e683-a550-4214-9107-8d3512447ebb",
     },
   },
   plugins: ["./expo-plugins/with-modify-gradle.js"],
