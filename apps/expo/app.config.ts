@@ -1,17 +1,17 @@
 import type { ExpoConfig } from "@expo/config";
 
 const defineConfig = (): ExpoConfig => ({
-  name: "ufrobikeqr",
+  name: "BikeQR",
   slug: "create-t3-turbo",
   scheme: "expo",
   version: "1.0.0",
   orientation: "portrait",
-  icon: "./assets/icon.png",
+  icon: "./assets/icon3.png",
   userInterfaceStyle: "light",
   splash: {
-    image: "./assets/icon.png",
+    image: "./assets/icon3.png",
     resizeMode: "contain",
-    backgroundColor: "#1F104A",
+    backgroundColor: "#FDF6F0",
   },
   updates: {
     fallbackToCacheTimeout: 0,
@@ -24,8 +24,8 @@ const defineConfig = (): ExpoConfig => ({
   android: {
     package: "com.ufrobikeqr",
     adaptiveIcon: {
-      foregroundImage: "./assets/icon.png",
-      backgroundColor: "#1F104A",
+      foregroundImage: "./assets/icon3.png",
+      backgroundColor: "#FDF6F0",
     },
   },
   extra: {

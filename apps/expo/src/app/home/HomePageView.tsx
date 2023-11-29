@@ -63,7 +63,7 @@ const HomePageView = () => {
   return (
     <SafeAreaView className="flex-1 items-center bg-white">
       <Text className="text-2xl font-bold">Bienvenido a BikeQR</Text>
-      <View className="flex-1">
+      <View className="flex-1 pt-5">
         <HomeList data={mockData} />
       </View>
     </SafeAreaView>

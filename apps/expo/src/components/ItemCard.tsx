@@ -1,15 +1,28 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, useWindowDimensions } from "react-native";
 import { type CardType } from "types";
 
 interface Props {
   item: CardType;
 }
 export const ItemCard = ({ item }: Props) => {
+  const { width } = useWindowDimensions();
+  console.log(width);
   return (
     <View
       key={item.id}
-      className="shadow-gray flex-row items-end space-x-4 rounded-md border border-gray-200 bg-white p-1 px-8 shadow-sm"
+      style={{
+        flex: 1,
+        flexDirection: `${width >= 360 ? "row" : "column"}`,
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#ddd",
+        borderRadius: 5,
+        shadowColor: "#000",
+        marginTop: 10,
+        padding: 10,
+      }}
     >
       <Image
         alt="Logo image for the item on the list"
@@ -17,7 +30,17 @@ export const ItemCard = ({ item }: Props) => {
         style={{ resizeMode: "contain" }}
         source={item.image}
       />
-      <Text className="justify-center text-base font-bold">{item.title}</Text>
+      <Text
+        style={{
+          fontSize: 15,
+          fontWeight: "500",
+          marginLeft: 10,
+          marginRight: 10,
+          alignSelf: "flex-end",
+        }}
+      >
+        {item.title}
+      </Text>
     </View>
   );
 };

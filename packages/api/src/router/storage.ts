@@ -12,13 +12,12 @@ import {
   publicProcedure,
 } from "../trpc";
 
+const PUSHER_ID = process.env.PUSHER_ID;
+const PUSHER_KEY = process.env.PUSHER_KEY;
+const PUSHER_SECRET = process.env.PUSHER_SECRET;
+const PUSHER_CLUSTER = process.env.PUSHER_CLUSTER;
 
-const PUSHER_ID = process.env.PUSHER_ID
-const PUSHER_KEY = process.env.PUSHER_KEY
-const PUSHER_SECRET = process.env.PUSHER_SECRET
-const PUSHER_CLUSTER = process.env.PUSHER_CLUSTER
-
-const pusherStringParser = z.string().min(3, "PUSHER ENV LENGTH")
+const pusherStringParser = z.string().min(3, "PUSHER ENV LENGTH");
 
 const pusher = new Pusher({
   appId: pusherStringParser.parse(PUSHER_ID),
@@ -88,7 +87,7 @@ export const storageRouter = createTRPCRouter({
       if (records.length != 0) {
         return {
           error: true,
-          msg: "Ya existe un proceso de almacenamiento en curso, por favor, guardar bicicleta o iniciar retiro.",
+          msg: "La bicicleta ya se encuentra en proceso de almacenamiento",
         };
       }
       const storage = await ctx.prisma.storage.create({
@@ -121,7 +120,7 @@ export const storageRouter = createTRPCRouter({
       if (storage) {
         caller.notifications.sendNotification({
           toUserId: userId,
-          title: "Se ha iniciado proceso de almacenamiento",
+          title: "Se ha iniciado el proceso de almacenamiento",
           body: "Se ha iniciado el proceso de almacenamiento",
           data: { type: "START_STORAGE" },
         });
@@ -132,7 +131,7 @@ export const storageRouter = createTRPCRouter({
       } else {
         return {
           error: true,
-          msg: "No se ha podido inicializar el proceso de almacenamiento",
+          msg: "Hubo un error al iniciar el proceso de almacenamiento",
         };
       }
     }),
@@ -174,7 +173,7 @@ export const storageRouter = createTRPCRouter({
       if (bike) {
         if (bike.code !== bikeCode) {
           return {
-            msg: "El token no contiene la misma bicicleta asociada al registro de storage",
+            msg: "El código de la bicicleta no coincide con el token de almacenamiento.",
             error: true,
           };
         }
@@ -183,13 +182,13 @@ export const storageRouter = createTRPCRouter({
           if (storage.status === Status.COMPLETED) {
             return {
               error: true,
-              msg: "El token está vinculado a un proceso completado",
+              msg: "El token está vinculado a un proceso de almacenamiento que ya se ha completado.",
             };
           }
           if (storage.status === Status.NOT_STORED) {
             return {
               error: true,
-              msg: "El token está vinculado a un proceso de almacenamiento que no se ha confirmado",
+              msg: "El token está vinculado a un proceso de almacenamiento que no se ha confirmado.",
             };
           }
           caller.notifications.sendNotification({
@@ -199,7 +198,7 @@ export const storageRouter = createTRPCRouter({
             data: { type: "FINISH_STORAGE", data: { bike, token } },
           });
           return {
-            msg: "Se ha iniciado el proceso de retiro exitosamente",
+            msg: "Se ha retirado la bicicleta exitosamente",
             data: { storage },
             error: false,
           };
@@ -207,7 +206,7 @@ export const storageRouter = createTRPCRouter({
       }
       return {
         error: true,
-        msg: "El token no se encuentra asociada a esta bicicleta",
+        msg: "No se ha encontrado el registro de almacenamiento",
       };
     }),
   confirmFinishStorage: publicProcedure

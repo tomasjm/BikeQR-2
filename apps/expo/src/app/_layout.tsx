@@ -10,10 +10,6 @@ const RootLayout = () => {
   return (
     <TRPCProvider>
       <SafeAreaProvider className="">
-        {/*
-          The Stack component displays the current page.
-          It also allows you to configure your screens 
-        */}
         <Stack
           screenOptions={{
             headerStyle: {
@@ -73,6 +69,7 @@ const RootLayout = () => {
             name="auth/UserLogin"
             options={{
               title: "BIKEQR",
+              headerBackVisible: false,
             }}
           />
           <Stack.Screen name="home" options={{ headerShown: false }} />

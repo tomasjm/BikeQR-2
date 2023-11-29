@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useForm, type FieldValues } from "react-hook-form";
 
 import { ProfileDataTitles } from "~/utils/Titles";
@@ -15,7 +16,6 @@ import { api, setToken } from "~/utils/api";
 import Button from "~/components/Button";
 import InputForm from "~/components/InputForm";
 import LoadingView from "~/components/LoadingView";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type User = {
   id: string;
@@ -60,7 +60,6 @@ export default function AccountView() {
   const logOutAction = useCallback(async () => {
     if (startLogout && (logout.isSuccess || logout.isError)) {
       setToken("");
-      console.log("OK");
       await AsyncStorage.removeItem("@token");
       utils.invalidate();
       router.replace("auth/UserLogin");
@@ -83,7 +82,7 @@ export default function AccountView() {
       }}
     >
       {userData ? (
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
           <View
             style={{
               alignItems: "center",
@@ -150,7 +149,7 @@ export default function AccountView() {
               </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
       ) : (
         <LoadingView />
       )}

@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { FontAwesome, Foundation } from "@expo/vector-icons";
@@ -7,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Controller, useForm } from "react-hook-form";
 
 import { api, setToken } from "~/utils/api";
+import LoadingAbsolute from "~/components/LoadingAbsolute";
 import { type UserRegisterProps } from "./UserRegister";
 
 export default function UserLogin() {
@@ -17,7 +25,7 @@ export default function UserLogin() {
   } = useForm<UserRegisterProps>();
   const router = useRouter();
   const userLoginMutation = api.auth.login.useMutation();
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: UserRegisterProps) => {
     const email = data.email.toLowerCase();
     const password = data.password;
     userLoginMutation.mutate({ email, password });
@@ -28,7 +36,10 @@ export default function UserLogin() {
       try {
         await AsyncStorage.setItem("@token", token);
       } catch (e) {
-        alert("error " + e);
+        Alert.alert(
+          "Error",
+          "Ha ocurrido un error con el inicio de sesión, por favor intente nuevamente.",
+        );
       }
     };
     if (userLoginMutation.isSuccess && !userLoginMutation.data?.error) {
@@ -37,11 +48,13 @@ export default function UserLogin() {
       storeData(token as string);
       router.push("/home");
     } else if (userLoginMutation.data?.error) {
-      alert("error:" + userLoginMutation.data?.msg);
+      Alert.alert("Error", userLoginMutation.data?.msg);
     }
   }, [userLoginMutation.isSuccess]);
+
   return (
     <SafeAreaView className="flex-1 bg-white">
+      {userLoginMutation.isLoading && <LoadingAbsolute />}
       <View className="space-y-4">
         <View className="-mb-10 -mt-10 items-center">
           <Image
@@ -65,9 +78,9 @@ export default function UserLogin() {
                   <View className="flex-row items-center space-x-2">
                     <FontAwesome
                       name="user"
-                      size={30}
+                      size={20}
                       color="black"
-                      style={{ width: 30, height: 30 }}
+                      style={{ width: 20, height: 20, textAlign: "center" }}
                     />
                     <TextInput
                       className="flex-1 rounded-md border p-3"
@@ -91,9 +104,9 @@ export default function UserLogin() {
                   <View className="flex-row items-center space-x-2">
                     <Foundation
                       name="key"
-                      size={30}
+                      size={20}
                       color="black"
-                      style={{ width: 30, height: 30 }}
+                      style={{ width: 20, height: 20, textAlign: "center" }}
                     />
                     <TextInput
                       secureTextEntry={true}

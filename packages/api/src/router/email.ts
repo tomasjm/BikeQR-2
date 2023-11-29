@@ -36,7 +36,7 @@ export const emailRouter = createTRPCRouter({
       }
       return {
         error: true,
-        msg: "No se ha podido enviar correo desde el usuario",
+        msg: "Hubo un error al enviar el correo, intente nuevamente.",
       };
     }),
 });

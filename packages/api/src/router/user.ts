@@ -18,10 +18,10 @@ export const userRouter = createTRPCRouter({
         name: z.string(),
         email: z.string(),
         password: z.string(),
-      })
+      }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.user.update({
+      const user = ctx.prisma.user.update({
         where: { id: input.id },
         data: {
           name: input.name,
@@ -29,5 +29,17 @@ export const userRouter = createTRPCRouter({
           password: input.password,
         },
       });
+
+      if (!user) {
+        return {
+          error: true,
+          msg: "Hubo un error al actualizar el usuario, intente nuevamente.",
+        };
+      }
+
+      return {
+        error: false,
+        msg: "Usuario actualizado correctamente",
+      };
     }),
 });

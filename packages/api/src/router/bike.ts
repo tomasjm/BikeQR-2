@@ -74,7 +74,7 @@ export const bikeRouter = createTRPCRouter({
         };
       }
       return {
-        msg: "No existe bicicleta asociada a este código",
+        msg: "Código inválido",
         data: {},
         error: true,
       };
