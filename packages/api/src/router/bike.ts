@@ -4,13 +4,16 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const bikeRouter = createTRPCRouter({
-  listUserBikes: protectedProcedure.query(({ ctx }) => {
-    const { userId } = ctx;
-    return ctx.prisma.bike.findMany({
-      orderBy: { id: "desc" },
-      where: { userId },
-    });
-  }),
+  listUserBikes: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(({ ctx, input }) => {
+      // const { userId } = ctx;
+      const { userId } = input;
+      return ctx.prisma.bike.findMany({
+        orderBy: { id: "desc" },
+        where: { userId },
+      });
+    }),
   createUserBike: protectedProcedure
     .input(z.object({ description: z.string() }))
     .mutation(({ ctx, input }) => {

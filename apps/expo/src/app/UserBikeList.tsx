@@ -6,7 +6,10 @@ import BikeList from "~/components/BikeList";
 import LoadingView from "~/components/LoadingView";
 
 function UserBikeList() {
-  const { data } = api.bike.listUserBikes.useQuery();
+  const userId = api.auth.getSession.useQuery().data?.user.id;
+  const { data } = api.bike.listUserBikes.useQuery({
+    userId: userId as string,
+  });
   const mappedData = data?.map(({ description, ...rest }) => ({
     ...rest,
     title: description,

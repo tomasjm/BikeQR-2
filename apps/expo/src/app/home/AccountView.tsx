@@ -25,7 +25,7 @@ type User = {
 };
 
 export default function AccountView() {
-  const utils = api.useContext();
+  const utils = api.useUtils();
   const [startLogout, setStartLogout] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const logout = api.auth.logout.useMutation();
@@ -62,6 +62,7 @@ export default function AccountView() {
       setToken("");
       await AsyncStorage.removeItem("@token");
       utils.invalidate();
+      console.log("logout in process..");
       router.replace("auth/UserLogin");
     }
   }, [startLogout, logout.isSuccess, logout.isError]);
