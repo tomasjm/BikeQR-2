@@ -9,6 +9,7 @@ import Button from "~/components/Button";
 
 const BikeRegister = () => {
   const router = useRouter();
+  const utils = api.useUtils();
 
   const [description, setDescription] = useState("");
   const registerBike = api.bike.createUserBike.useMutation();
@@ -26,6 +27,7 @@ const BikeRegister = () => {
   };
 
   if (registerBike.isSuccess) {
+    utils.bike.listUserBikes.refetch();
     return (
       <SafeAreaView className="flex-1 items-center justify-center">
         <LottieView

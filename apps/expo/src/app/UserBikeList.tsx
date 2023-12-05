@@ -1,9 +1,9 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { api } from "~/utils/api";
 import BikeList from "~/components/BikeList";
 import LoadingView from "~/components/LoadingView";
+import { api } from "~/utils/api";
 
 function UserBikeList() {
   const userId = api.auth.getSession.useQuery().data?.user.id;

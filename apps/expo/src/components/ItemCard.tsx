@@ -7,7 +7,6 @@ interface Props {
 }
 export const ItemCard = ({ item }: Props) => {
   const { width } = useWindowDimensions();
-  console.log(width);
   return (
     <View
       key={item.id}

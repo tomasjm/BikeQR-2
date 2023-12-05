@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, SafeAreaView, Text, View } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useAtom } from "jotai";
@@ -19,7 +14,6 @@ const Index = () => {
   const [bike, setBike] = useAtom(bikeAtom);
   const { data, type } = useLocalSearchParams();
   const [storageId, setStorageId] = useState<string>("");
-
   const { isSuccess, subscribe } = usePusher({
     channel: storageId,
     event: "FINISH_STORAGE",
@@ -32,14 +26,13 @@ const Index = () => {
       finishStorageMutation.mutate({ token, bikeCode });
     }
     if (type == BarCodeScanner.Constants.BarCodeType.code128) {
-      console.log("se ha leido bicicleta", data);
       setBike(data as string);
     }
   }, [type]);
-
+  console.log(finishStorageMutation.status);
   useEffect(() => {
     if (finishStorageMutation.isSuccess) {
-      alert("se ha iniciado el proceso de finalización de retiro");
+      alert("Se ha iniciado el proceso de finalización de retiro");
       const data = finishStorageMutation.data;
       if (data.error) {
         return alert(`Error!: ${data.msg}`);
@@ -61,9 +54,14 @@ const Index = () => {
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+    setBike("");
+  }, []);
+  console.log(bike);
+
   return (
     <SafeAreaView className="flex-1 bg-white p-4">
-      {!bike ? (
+      {bike ? (
         <View className="items-center justify-center gap-4">
           <Text className="text-center text-base font-semibold">
             Por favor, escanee el código QR que se encuentra en la pantalla del
@@ -78,7 +76,19 @@ const Index = () => {
               })
             }
           />
-          <>{finishStorageMutation.isLoading && <ActivityIndicator />}</>
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {finishStorageMutation.isLoading && <ActivityIndicator />}
+          </View>
         </View>
       ) : (
         <View className="flex-1 ">
