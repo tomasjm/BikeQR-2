@@ -14,9 +14,12 @@ interface Props {
   };
 }
 export const BikeListCard = ({ item }: Props) => {
-  const { data } = api.storage.checkStorageStatusByBikeId.useQuery({
+  const { data, refetch } = api.storage.checkStorageStatusByBikeId.useQuery({
     bikeId: item.id,
   });
+  React.useEffect(() => {
+    refetch();
+  }, []);
 
   const setStatusColor = (data: any) => {
     switch (data) {

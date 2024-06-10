@@ -83,17 +83,17 @@ const BikeDetail = () => {
             >
               Código de retiro:
             </Text>
-            <View className="border p-3">
+            <View className="flex items-center justify-center border p-3">
               {qr ? (
-                <QRCode size={350} logoSize={60} value={qr} />
+                <QRCode size={300} logoSize={60} value={qr} />
               ) : (
                 <Text
                   style={{
                     fontSize: 15,
                     fontWeight: "bold",
                     textAlign: "center",
-                    width: 350,
-                    height: 350,
+                    width: 300,
+                    height: 300,
                   }}
                 >
                   No se ha generado el código de retiro

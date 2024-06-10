@@ -22,7 +22,8 @@ const StartStorage = () => {
   });
   useEffect(() => {
     if (isSuccess) {
-      alert("se completó el storage");
+      alert("Se ha guardado la bicicleta exitosamente");
+      router.push("/");
     }
   }, [isSuccess]);
 

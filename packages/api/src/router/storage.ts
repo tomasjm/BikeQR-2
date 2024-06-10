@@ -221,7 +221,7 @@ export const storageRouter = createTRPCRouter({
           },
         },
         data: {
-          status: Status.COMPLETED,
+          status: Status.NOT_STORED,
         },
       });
       if (records.count == 1) {

@@ -29,7 +29,7 @@ export default function StoreBike() {
           alert("Se ha guardado la bicicleta");
           router.push("/");
         } catch (e) {
-          alert("error " + e);
+          alert(`Error al guardar la bicicleta: ${e}`);
         }
       };
       storeQr(dataQR as string, bikeId as string);

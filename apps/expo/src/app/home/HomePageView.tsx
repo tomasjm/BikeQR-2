@@ -15,11 +15,9 @@ const HomePageView = () => {
   const { data, isSuccess } = api.auth.getSession.useQuery(undefined, {
     refetchOnMount: "always",
   });
-
   const { error, token, notification, requestPermissions } = useNotifications();
   const setupNotificationMutation =
     api.notifications.saveExpoPushToken.useMutation();
-
   const { setRole } = useRole();
   useEffect(() => {
     if (isSuccess) {

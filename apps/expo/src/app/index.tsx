@@ -13,7 +13,6 @@ const Index = () => {
     const getData = async () => {
       try {
         const token = await AsyncStorage.getItem("@token");
-        console.log(token);
         if (token !== null && !checkSessionMutation.isLoading) {
           setToken(token);
           checkSessionMutation.mutate();
